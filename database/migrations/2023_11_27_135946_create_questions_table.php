@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
-            $table->string('answer');
+            $table->string('question_title');
+            $table->foreignId('round_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('answer_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->integer('points');
             $table->timestamps();
         });
     }

@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('game_title');
             $table->integer('rounds_quantity');
-            $table->string('uuid');
-            $table->foreignId('round_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

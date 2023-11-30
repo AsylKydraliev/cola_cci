@@ -1,50 +1,104 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
+use App\Models\Answer;
 use App\Models\Game;
+use App\Models\Question;
+use App\Models\Round;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class GameController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
-    public function index()
+    public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
+        $games = Game::query()
+            ->with(['rounds'])
+            ->paginate(10);
+
+        return view('admin.games.index', compact('games'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
-    public function create()
+    public function create(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        //
+        $answers = Answer::all();
+
+        return view('admin.games.create', compact('answers'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param StoreGameRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreGameRequest $request)
+    public function store(StoreGameRequest $request): RedirectResponse
     {
-        //
+        $validatedData = $request->validated();
+        $rounds = $request->get('rounds');
+        $questions = $request->get('questions');
+        $points = $request->get('points');
+        $answerIds = $request->get('answer_ids');
+
+        $game = new Game();
+        $game->game_title = $validatedData['game_title'];
+        $game->rounds_quantity = $validatedData['rounds_quantity'];
+        $game->save();
+
+        // Создание вопросов и ответов для каждого раунда
+        foreach ($rounds as $roundIndex => $roundTitle) {
+            $round = new Round();
+            $round->round_title = $roundTitle;
+            $game->rounds()->save($round);
+
+            // Создание вопроса
+            foreach ($questions[$roundIndex] as $questionIndex => $questionText) {
+
+                // Получение баллов для вопроса
+                $point = $points[$roundIndex][$questionIndex];
+                $answerId = $answerIds[$roundIndex][$questionIndex];
+
+                // Создание вопроса с баллами
+                $question = new Question();
+                $question->question_title = $questionText;
+                $question->points = $point;
+                $question->answer_id = $answerId;
+
+                $round->questions()->save($question);
+            }
+        }
+
+        return redirect()
+            ->route('admin.games.index')
+            ->with('success', "Игра $game->game_title успешно создана");
     }
 
     /**
-     * Display the specified resource.
+     * @param Game $game
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
-    public function show(Game $game)
+    public function show(Game $game): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        //
+        return view('admin.games.show', compact('game'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param Game $game
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
-    public function edit(Game $game)
+    public function edit(Game $game): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        //
+        return view('admin.games.show', compact('game'));
     }
 
     /**

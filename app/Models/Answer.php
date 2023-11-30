@@ -5,35 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- * @property string $round_title
+ * @property string $answer_title
  *
- * @property-read Game $game
- * @property-read Round $questions
+ * @property-read Question $question
  *
  * @mixin Builder
  */
-class Round extends Model
+class Answer extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'id',
-        'round_title',
-        'game_id'
+        'answer_title',
     ];
-
-    /**
-     * @return BelongsTo
-     */
-    public function game(): BelongsTo
-    {
-        return $this->belongsTo(Game::class);
-    }
 
     /**
      * @return HasMany
