@@ -1,6 +1,9 @@
 $(document).ready(function () {
     let isStep1Valid = false;
     const answers = $('#answers').data('answers');
+    const game = $('#rounds-container').data('game');
+    const rounds = $('#rounds-container').data('rounds');
+    const questions = $('#rounds-container').data('questions');
 
     // Выключение кнопки next-step, если поля game_title и rounds_quantity не заполнены
     function validatedStep1() {

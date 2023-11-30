@@ -45,12 +45,7 @@
                                         href="{{ route('admin.games.show', ['game' => $game]) }}"
                                         class="btn d-inline-block icons"
                                     >
-                                        <i
-                                            class="bi bi-info-circle fs-4"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom"
-                                            data-bs-title="Подробнее"
-                                        ></i>
+                                        <i class="bi bi-info-circle fs-4"></i>
                                     </a>
 
                                     <a

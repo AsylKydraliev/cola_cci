@@ -45,10 +45,10 @@ class GameController extends Controller
     public function store(StoreGameRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
-        $rounds = $request->get('rounds');
-        $questions = $request->get('questions');
-        $points = $request->get('points');
-        $answerIds = $request->get('answer_ids');
+        $rounds = $validatedData['rounds'];
+        $questions = $validatedData['questions'];
+        $points = $validatedData['points'];
+        $answerIds = $validatedData['answer_ids'];
 
         $game = new Game();
         $game->game_title = $validatedData['game_title'];
@@ -98,7 +98,23 @@ class GameController extends Controller
      */
     public function edit(Game $game): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        return view('admin.games.show', compact('game'));
+        $answers = Answer::all();
+        $questions = [];
+
+        foreach ($game->rounds as $round) {
+            $questions[] = Question::query()
+                ->select(
+                    'questions.id',
+                    'questions.question_title',
+                    'questions.round_id',
+                    'questions.answer_id',
+                    'questions.points'
+                )
+                ->where('questions.round_id', '=', $round->id)
+                ->get();
+        }
+
+        return view('admin.games.edit', compact('game', 'answers', 'questions'));
     }
 
     /**
@@ -106,7 +122,25 @@ class GameController extends Controller
      */
     public function update(UpdateGameRequest $request, Game $game)
     {
-        //
+        $validatedData = $request->validated();
+        $rounds = $validatedData['rounds'];
+        $questions = $validatedData['questions'];
+        $points = $validatedData['points'];
+        $answerIds = $validatedData['answer_ids'];
+
+        $game->game_title = $validatedData['game_title'];
+        $game->rounds_quantity = $validatedData['rounds_quantity'];
+        $game->save();
+
+        foreach ($rounds as $roundIndex => $roundTitle) {
+            $round = $game->rounds()->get($roundIndex);
+            $round->round_title = $roundTitle;
+            $rounds->save();
+        }
+
+        return redirect()
+            ->route('admin.games.index')
+            ->with('success', "Игра $game->game_title успешно обновлена");
     }
 
     /**
