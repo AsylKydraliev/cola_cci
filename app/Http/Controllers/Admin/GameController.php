@@ -111,7 +111,8 @@ class GameController extends Controller
                     'questions.points'
                 )
                 ->where('questions.round_id', '=', $round->id)
-                ->get();
+                ->get()
+                ->toArray();
         }
 
         return view('admin.games.edit', compact('game', 'answers', 'questions'));
