@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $game_title
  * @property integer $rounds_quantity
  *
+ * @property-read Round $rounds
+ *
  * @mixin Builder
  */
 class Game extends Model
