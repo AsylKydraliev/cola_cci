@@ -20,6 +20,7 @@
 
         <form action="{{ route('admin.games.update', ['game' => $game]) }}" method="post">
             @csrf
+            @method('put')
             <div id="game" class="tab-content">
                 <h3>Шаг 1</h3>
 
@@ -34,6 +35,7 @@
                         class="form-control"
                         placeholder="Введите название игры"
                         value="{{ old('game_title') ?? $game->game_title }}"
+                        required
                     />
                 </div>
                 <div class="mb-3">
@@ -45,6 +47,7 @@
                         name="rounds_quantity"
                         placeholder="Выберите количество раундов"
                         value="{{ old('rounds_quantity') ?? $game->rounds_quantity  }}"
+                        required
                     />
                 </div>
 
@@ -58,14 +61,12 @@
 
                 <hr>
 
-                <div
-                    id="rounds-container"
-                >
-                    {{--                <div id="answers" data-answers="{{ $answers }}"></div>--}}
+                <div id="rounds-container">
+                    <div id="answers" data-answers="{{ $answers }}"></div>
                     <!-- Здесь будут созданы поля для раундов -->
 
                     @foreach($game->rounds as $keyRound => $round)
-                        <div class="mb-3">
+                        <div class="mb-3 round">
                             <div class="mb-2">
                                 <label for="rounds">Раунд №{{ $keyRound +1 }}</label>
                                 <input
@@ -74,8 +75,12 @@
                                     class="form-control"
                                     name="rounds[{{ $round->id }}]"
                                     placeholder="Введите название раунда"
-                                    value="{{ old('rounds') ?? $round->round_title }}"
+                                    value="{{ old('rounds[]') ?? $round->round_title }}"
+                                    required
                                 />
+                                @error('rounds')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <button type="button" class="btn btn-primary btn-sm mb-2 addQuestion">
@@ -84,34 +89,49 @@
                             </button>
 
                             @foreach($questions[$keyRound] as $keyQuestion => $question)
-                                <div class="mb-1 d-flex gap-1">
+                                <div class="mb-1 d-flex gap-1 question">
                                     <input
                                         type="text"
                                         id="questions"
                                         class="form-control form-control-sm"
-                                        name="questions[{{ $round->id }}][{{ $keyQuestion }}]"
+                                        name="questions[{{ $round->id }}][{{ $question['id'] }}]"
                                         placeholder="Введите вопрос"
-                                        value="{{ old("questions.{$round->id}.{$keyQuestion}.question_title") ?? $question['question_title'] }}"
+                                        value="{{ old("questions.{$round->id}.{$question['id']}.question_title") ?? $question['question_title'] }}"
+                                        required
                                     />
-
-                                    <select id="answer_id" name="answer_id" class="form-select form-select-sm">
+                                    @error('questions')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                    <select
+                                        id="answer_id"
+                                        name="answer_ids[{{ $round->id }}][{{ $question['id'] }}]"
+                                        class="form-select form-select-sm"
+                                        required
+                                    >
                                         <option value="">Выберите ответ</option>
                                         @foreach($answers as $answer)
                                             <option
                                                 value="{{ $answer->id }}"
-                                                @selected($answer->id == (old("answer_id.{$round->id}.{$keyQuestion}") ?? $question['answer_id']))
+                                                @selected($answer->id == (old("answer_id.{$round->id}.{$question['id']}") ?? $question['answer_id']))
                                             >{{ $answer->answer_title }}</option>
                                         @endforeach
                                     </select>
+                                    @error('answer_ids')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
 
                                     <input
                                         type="number"
                                         id="points"
                                         class="form-control form-control-sm"
-                                        name="points[{{ $round->id }}][{{ $keyQuestion }}]"
+                                        name="points[{{ $round->id }}][{{ $question['id'] }}]"
                                         placeholder="Введите баллы"
-                                        value="{{ old("points.{$round->id}.{$keyQuestion}") ?? $question['points'] }}"
+                                        value="{{ old("points.{$round->id}.{$question['id']}") ?? $question['points'] }}"
+                                        required
                                     />
+                                    @error('points')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
 
                                     <button type="button" class="btn btn-danger btn-sm deleteBtn">
                                         <i class="bi bi-x-lg"></i>

@@ -22,6 +22,13 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+      'question_title',
+      'answer_id',
+      'round_id',
+      'points'
+    ];
+
     /**
      * @return BelongsTo
      */

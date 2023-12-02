@@ -1,9 +1,6 @@
 $(document).ready(function () {
     let isStep1Valid = false;
     const answers = $('#answers').data('answers');
-    const game = $('#rounds-container').data('game');
-    const rounds = $('#rounds-container').data('rounds');
-    const questions = $('#rounds-container').data('questions');
 
     // Выключение кнопки next-step, если поля game_title и rounds_quantity не заполнены
     function validatedStep1() {
@@ -15,6 +12,51 @@ $(document).ready(function () {
 
     $('#game_title, #rounds_quantity').on('input', function () {
         validatedStep1();
+    });
+
+    $('.addQuestion').click(function () {
+        // Добавление вопроса
+        const roundContainer = $(this).closest('.round');
+        const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
+        const roundName = roundContainer.find('input[name^="rounds["]').attr('name');
+        const roundIndex = roundName.match(/\[(\d+)\]/)[1];
+
+        const questionInput = $('<input>')
+            .attr('type', 'text')
+            .attr('name', `questions[${roundIndex}][]`)
+            .addClass('form-control form-control-sm col me-1')
+            .attr('placeholder', 'Введите вопрос');
+
+        const answerInput = $('<select>')
+            .attr('name', `answer_ids[${roundIndex}][]`)
+            .addClass('form-select form-select-sm col me-1')
+            .attr('placeholder', 'Выберите ответ');
+        // Добавление пустого варианта
+        answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
+
+        const pointsInput = $('<input>')
+            .attr('type', 'number')
+            .attr('name', `points[${roundIndex}][]`)
+            .addClass('form-control form-control-sm col me-1')
+            .attr('placeholder', 'Количество баллов за ответ');
+
+        const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
+            .attr('type', 'button')
+            .addClass('btn btn-danger btn-sm deleteBtn');
+
+        questionInputContainer
+            .append(questionInput)
+            .append(answerInput)
+            .append(pointsInput)
+            .append(deleteInputButton);
+        roundContainer.append(questionInputContainer);
+    });
+
+    // Удаление вопроса
+    $('#rounds-container').on('click', '.deleteBtn', function () {
+        const questionContainer = $(this).closest('.question');
+
+        questionContainer.remove();
     });
 
     $('#next-step').click(function () {
@@ -38,162 +80,70 @@ $(document).ready(function () {
             return;
         }
 
-        // если количество раундов стало больше чем было, то добавляем новые
-        // if (previousRoundsQuantity !== 0 && previousRoundsQuantity < roundsQuantity) {
-        //     for (let i = previousRoundsQuantity + 1; i <= previousRoundsQuantity + roundsDifference; i++) {
-        //         const roundContainer = $('<div>').addClass('round mb-3');
-        //         const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
-        //
-        //         // Round
-        //         const roundInput = $('<input>')
-        //             .attr('type', 'text')
-        //             .attr('name', `rounds[${i}]`)
-        //             .addClass('form-control mb-2')
-        //             .attr('placeholder', 'Введите название раунда');
-        //         const roundLabel = $('<label>')
-        //             .text('Раунд № ' + i);
-        //         const addInputButton = $('<button><i class="bi bi-plus-lg"></i>Добавить вопрос</button><br>')
-        //             .attr('type', 'button')
-        //             .addClass('btn btn-primary btn-sm mb-1 addQuestion');
-        //
-        //         // Question
-        //         const questionInput = $('<input>')
-        //             .attr('type', 'text')
-        //             .attr('name', `questions[${i}][]`)
-        //             .addClass('form-control form-control-sm col me-1')
-        //             .attr('placeholder', 'Введите вопрос');
-        //
-        //         const answerInput = $('<select>')
-        //             .attr('name', `answer_ids[${i}][]`)
-        //             .addClass('form-select form-select-sm col me-1')
-        //             .attr('placeholder', 'Выберите ответ');
-        //         // Добавление пустого варианта
-        //         answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
-        //         // Добавление ответов из массива данных
-        //         answers.forEach(function (answer) {
-        //             answerInput.append($('<option>').attr('value', answer.id).text(answer.answer_title));
-        //         });
-        //
-        //         const pointsInput = $('<input>')
-        //             .attr('type', 'number')
-        //             .attr('name', `points[${i}]`)
-        //             .addClass('form-control form-control-sm col me-1')
-        //             .attr('placeholder', 'Количество баллов за ответ');
-        //
-        //         const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
-        //             .attr('type', 'button')
-        //             .addClass('btn btn-danger btn-sm deleteBtn');
-        //
-        //         questionInputContainer.append(questionInput).append(answerInput).append(pointsInput).append(deleteInputButton);
-        //         roundContainer.append(roundLabel).append(roundInput).append(addInputButton).append(questionInputContainer);
-        //
-        //         $('#rounds-container')
-        //             .append(roundContainer);
-        //     }
-        //     return;
-        // }
+        //если количество раундов стало больше чем было, то добавляем новые
+        if (previousRoundsQuantity !== 0 && previousRoundsQuantity < roundsQuantity) {
+            for (let i = previousRoundsQuantity + 1; i <= previousRoundsQuantity + roundsDifference; i++) {
+                const roundContainer = $('<div>').addClass('round mb-3');
+                const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
 
-        // if (isStep1Valid) {
-        //     for (let i = 1; i <= roundsQuantity; i++) {
-        //         const roundContainer = $('<div>').addClass('round mb-3');
-        //         const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
-        //
-        //         // Round
-        //         const roundInput = $('<input>')
-        //             .attr('type', 'text')
-        //             .attr('name', `rounds[${i}]`)
-        //             .addClass('form-control mb-2')
-        //             .attr('placeholder', 'Введите название раунда')
-        //         const roundLabel = $('<label>')
-        //             .text('Раунд № ' + i);
-        //         const addInputButton = $('<button><i class="bi bi-plus-lg"></i>Добавить вопрос</button><br>')
-        //             .attr('type', 'button')
-        //             .addClass('btn btn-primary btn-sm mb-1 addQuestion');
-        //
-        //
-        //         // Добавляем вопросы для текущего раунда
-        //         const questionInput = $('<input>')
-        //             .attr('type', 'text')
-        //             .attr('name', `questions[${i}][]`)
-        //             .addClass('form-control form-control-sm col me-1')
-        //             .attr('placeholder', 'Введите вопрос');
-        //
-        //         const answerInput = $('<select>')
-        //             .attr('name', `answer_ids[${i}][]`)
-        //             .addClass('form-select form-select-sm col me-1')
-        //             .attr('placeholder', 'Выберите ответ');
-        //         // Добавление пустого варианта
-        //         answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
-        //
-        //         const pointsInput = $('<input>')
-        //             .attr('type', 'number')
-        //             .attr('name', `points[${i}][]`)
-        //             .addClass('form-control form-control-sm col me-1')
-        //             .attr('placeholder', 'Количество баллов за ответ');
-        //         const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
-        //             .attr('type', 'button')
-        //             .addClass('btn btn-danger btn-sm deleteBtn');
-        //
-        //         questionInputContainer
-        //             .append(questionInput)
-        //             .append(answerInput)
-        //             .append(pointsInput)
-        //             .append(deleteInputButton);
-        //
-        //         roundContainer
-        //             .append(roundLabel)
-        //             .append(roundInput)
-        //             .append(addInputButton)
-        //             .append(questionInputContainer);
-        //
-        //         $('#rounds-container')
-        //             .append(roundContainer);
-        //     }
-        // }
+                // Round
+                const roundInput = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', `rounds[${i}]`)
+                    .addClass('form-control mb-2')
+                    .attr('placeholder', 'Введите название раунда')
+                    .attr('required', true);
+                const roundLabel = $('<label>')
+                    .text('Раунд № ' + i);
+                const addInputButton = $('<button><i class="bi bi-plus-lg"></i>Добавить вопрос</button><br>')
+                    .attr('type', 'button')
+                    .addClass('btn btn-primary btn-sm mb-1 addQuestion');
 
-        // Добавление вопроса
-        // $('#rounds-container').on('click', '.addQuestion', function () {
-        //     const roundContainer = $(this).closest('.round');
-        //     const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
-        //     const roundName = roundContainer.find('input[name^="rounds["]').attr('name');
-        //     const roundIndex = roundName.match(/\[(\d+)\]/)[1];
-        //
-        //     const questionInput = $('<input>')
-        //         .attr('type', 'text')
-        //         .attr('name', `questions[${roundIndex}][]`)
-        //         .addClass('form-control form-control-sm col me-1')
-        //         .attr('placeholder', 'Введите вопрос');
-        //
-        //     const answerInput = $('<select>')
-        //         .attr('name', `answer_ids[${roundIndex}][]`)
-        //         .addClass('form-select form-select-sm col me-1')
-        //         .attr('placeholder', 'Выберите ответ');
-        //     // Добавление пустого варианта
-        //     answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
-        //
-        //     const pointsInput = $('<input>')
-        //         .attr('type', 'number')
-        //         .attr('name', `points[${roundIndex}][]`)
-        //         .addClass('form-control form-control-sm col me-1')
-        //         .attr('placeholder', 'Количество баллов за ответ');
-        //
-        //     const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
-        //         .attr('type', 'button')
-        //         .addClass('btn btn-danger btn-sm deleteBtn');
-        //
-        //     questionInputContainer
-        //         .append(questionInput)
-        //         .append(answerInput)
-        //         .append(pointsInput)
-        //         .append(deleteInputButton);
-        //     roundContainer.append(questionInputContainer);
-        // });
+                // Question
+                const questionInput = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', `questions[${i}][]`)
+                    .addClass('form-control form-control-sm col me-1')
+                    .attr('placeholder', 'Введите вопрос')
+                    .attr('required', true);
 
-        // Удаление вопроса
-        $('#rounds-container').on('click', '.deleteBtn', function () {
-            const questionContainer = $(this).closest('.question');
+                const answerInput = $('<select>')
+                    .attr('name', `answer_ids[${i}][]`)
+                    .addClass('form-select form-select-sm col me-1')
+                    .attr('placeholder', 'Выберите ответ')
+                    .attr('required', true);
+                // Добавление пустого варианта
+                answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
+                answers.forEach(function (answer) {
+                    answerInput.append($('<option>').attr('value', answer.id).text(answer.answer_title));
+                });
 
-            questionContainer.remove();
-        });
+                const pointsInput = $('<input>')
+                    .attr('type', 'number')
+                    .attr('name', `points[${i}]`)
+                    .addClass('form-control form-control-sm col me-1')
+                    .attr('placeholder', 'Количество баллов за ответ')
+                    .attr('required', true);
+
+                const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
+                    .attr('type', 'button')
+                    .addClass('btn btn-danger btn-sm deleteBtn');
+
+                questionInputContainer
+                    .append(questionInput)
+                    .append(answerInput)
+                    .append(pointsInput)
+                    .append(deleteInputButton);
+                roundContainer
+                    .append(roundLabel)
+                    .append(roundInput)
+                    .append(addInputButton)
+                    .append(questionInputContainer);
+
+                $('#rounds-container').append(roundContainer);
+
+                return;
+            }
+        }
     })
 });
