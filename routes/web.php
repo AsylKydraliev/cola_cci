@@ -21,6 +21,7 @@ Route::get('/', function () {
 
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::resource('games', GameController::class);
+    Route::post('store_party/{game}', [PartyController::class, 'store'])->name('store_party');
 });
 
 Auth::routes();
