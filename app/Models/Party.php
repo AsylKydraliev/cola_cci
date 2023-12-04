@@ -7,26 +7,31 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property string $round_title
  * @property int $game_id
+ * @property string $moderator_uuid
+ * @property string $player_uuid
+ * @property string|null $players
+ * @property int|null $party_stage_id
+ * @property int $status
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
  * @property-read Game $game
- * @property-read Question $questions
+ * @property-read PartyStage $stages
  *
  * @mixin Builder
  */
-class Round extends Model
+class Party extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'id',
-        'round_title',
-        'game_id'
-    ];
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_STARTED = 2;
+    public const STATUS_COMPLETED = 3;
 
     /**
      * @return BelongsTo
@@ -39,8 +44,8 @@ class Round extends Model
     /**
      * @return HasMany
      */
-    public function questions(): HasMany
+    public function stages(): HasMany
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(PartyStage::class);
     }
 }
