@@ -23,20 +23,23 @@ $(document).ready(function () {
 
         const questionInput = $('<input>')
             .attr('type', 'text')
-            .attr('name', `questions[${roundIndex}][]`)
+            .attr('name', `questions[${roundIndex}]['0']`)
             .addClass('form-control form-control-sm col me-1')
             .attr('placeholder', 'Введите вопрос');
 
         const answerInput = $('<select>')
-            .attr('name', `answer_ids[${roundIndex}][]`)
+            .attr('name', `answer_ids[${roundIndex}]['0']`)
             .addClass('form-select form-select-sm col me-1')
             .attr('placeholder', 'Выберите ответ');
         // Добавление пустого варианта
         answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
+        answers.forEach(function (answer) {
+            answerInput.append($('<option>').attr('value', answer.id).text(answer.answer_title));
+        });
 
         const pointsInput = $('<input>')
             .attr('type', 'number')
-            .attr('name', `points[${roundIndex}][]`)
+            .attr('name', `points[${roundIndex}]['0']`)
             .addClass('form-control form-control-sm col me-1')
             .attr('placeholder', 'Количество баллов за ответ');
 
@@ -102,13 +105,13 @@ $(document).ready(function () {
                 // Question
                 const questionInput = $('<input>')
                     .attr('type', 'text')
-                    .attr('name', `questions[${i}][]`)
+                    .attr('name', `questions[${i}]['0']`)
                     .addClass('form-control form-control-sm col me-1')
                     .attr('placeholder', 'Введите вопрос')
                     .attr('required', true);
 
                 const answerInput = $('<select>')
-                    .attr('name', `answer_ids[${i}][]`)
+                    .attr('name', `answer_ids[${i}]['0']`)
                     .addClass('form-select form-select-sm col me-1')
                     .attr('placeholder', 'Выберите ответ')
                     .attr('required', true);
@@ -120,7 +123,7 @@ $(document).ready(function () {
 
                 const pointsInput = $('<input>')
                     .attr('type', 'number')
-                    .attr('name', `points[${i}]`)
+                    .attr('name', `points[${i}]['0']`)
                     .addClass('form-control form-control-sm col me-1')
                     .attr('placeholder', 'Количество баллов за ответ')
                     .attr('required', true);

@@ -8,11 +8,18 @@ use App\Models\Party;
 use App\Models\PartyStage;
 use App\Models\Question;
 use App\Models\Round;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 
 class PartyController extends Controller
 {
-    public function store(Game $game)
+    /**
+     * @param Game $game
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     */
+    public function store(Game $game): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $game->load('rounds.questions');
 
@@ -46,5 +53,9 @@ class PartyController extends Controller
 
         $party->party_stage_id = $minStageId;
         $party->save();
+
+        $parties = Party::query()->where('game_id', '=', $game->id)->get();
+
+        return view('admin.games.parties', compact('parties'));
     }
 }

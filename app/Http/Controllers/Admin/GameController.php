@@ -7,6 +7,7 @@ use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Answer;
 use App\Models\Game;
+use App\Models\Party;
 use App\Models\Question;
 use App\Models\Round;
 use Illuminate\Contracts\Foundation\Application;
@@ -148,7 +149,7 @@ class GameController extends Controller
         $points = $validatedData['points'];
         $answerIds = $validatedData['answer_ids'];
 
-        //TODO если количество раундов стало меньше чем было, нужно удалить остальные связанные раунды
+        //TODO если количество раундов стало меньше чем было, нужно удалить остальные связанные раунды и вопросы
 
         $game->game_title = $validatedData['game_title'];
         $game->rounds_quantity = $validatedData['rounds_quantity'];
@@ -175,23 +176,22 @@ class GameController extends Controller
                 $point = $points[$roundId][$questionId];
                 $answerId = $answerIds[$roundId][$questionId];
 
-                // Обновление или создание вопроса с баллами
-                if(!$questionId) {
-                    $round->questions()->create(
-                        [
-                            'question_title' => $questionTitle,
-                            'points' => $point,
-                            'answer_id' => $answerId,
-                        ]
-                    );
+                $question = Question::find($questionId);
+
+                if ($question) {
+                    $question->update([
+                        'question_title' => $questionTitle,
+                        'points' => $point,
+                        'answer_id' => $answerId,
+                        'round_id' => $roundId,
+                    ]);
                 } else {
-                    $round->questions()->update(
-                        [
-                            'question_title' => $questionTitle,
-                            'points' => $point,
-                            'answer_id' => $answerId,
-                        ]
-                    );
+                    $question = new Question();
+                    $question->question_title = $questionTitle;
+                    $question->points = $point;
+                    $question->answer_id = $answerId;
+
+                    $round->questions()->save($question);
                 }
             }
         }

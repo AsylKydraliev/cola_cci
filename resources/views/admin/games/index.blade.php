@@ -55,11 +55,15 @@
                                         <i class="bi bi-pencil-square fs-4 text-warning"></i>
                                     </a>
 
-                                    <form action="{{ route('admin.store_party', ['game' => $game]) }}"
-                                          method="post">
+                                    <form
+                                        action="{{ route('admin.store_party', ['game' => $game]) }}"
+                                        method="post"
+                                        id="parties"
+                                    >
                                         @csrf
                                         <button type="submit" class="btn d-inline-block icons">
-                                            <i class="bi bi-play-circle fs-4"></i></button>
+                                            <i class="bi bi-play-circle fs-4"></i>
+                                        </button>
                                     </form>
 
                                     <form action="{{ route('admin.games.destroy', ['game' => $game]) }}" method="post">
