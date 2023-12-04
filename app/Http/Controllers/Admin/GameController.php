@@ -132,7 +132,6 @@ class GameController extends Controller
         $answerIds = $validatedData['answer_ids'];
 
         //TODO если количество раундов стало меньше чем было, нужно удалить остальные связанные раунды
-        //TODO если количество раундов стало больше чем было, то меняется порядок раундов и вопросов
 
         $game->game_title = $validatedData['game_title'];
         $game->rounds_quantity = $validatedData['rounds_quantity'];
@@ -140,19 +139,27 @@ class GameController extends Controller
 
         // Обновление или создание раундов
         foreach ($rounds as $roundId => $roundTitle) {
-            $round = $game->rounds()->updateOrCreate(
-                ['id' => $roundId],
-                ['round_title' => $roundTitle]
-            );
+            $existingRound = Round::find($roundId);
+
+            if ($existingRound) {
+                // Если запись существует, обновляем ее
+                $existingRound->update(['round_title' => $roundTitle]);
+                $round = $existingRound;
+            } else {
+                // Если запись не существует, создаем новую
+                $round = new Round();
+                $round->round_title = $roundTitle;
+                $game->rounds()->save($round);
+            }
 
             // Обновление или создание вопроса для каждого раунда
-            foreach ($questions[$roundId] as $questionIndex => $questionTitle) {
+            foreach ($questions[$roundId] as $questionId => $questionTitle) {
                 // Получение баллов для вопроса
-                $point = $points[$roundId][$questionIndex];
-                $answerId = $answerIds[$roundId][$questionIndex];
+                $point = $points[$roundId][$questionId];
+                $answerId = $answerIds[$roundId][$questionId];
 
                 // Обновление или создание вопроса с баллами
-                if(!$questionIndex) {
+                if(!$questionId) {
                     $round->questions()->create(
                         [
                             'question_title' => $questionTitle,
