@@ -89,7 +89,24 @@ class GameController extends Controller
      */
     public function show(Game $game): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        return view('admin.games.show', compact('game'));
+        $answers = Answer::all();
+        $questions = [];
+
+        foreach ($game->rounds as $round) {
+            $questions[] = Question::query()
+                ->select(
+                    'questions.id',
+                    'questions.question_title',
+                    'questions.round_id',
+                    'questions.answer_id',
+                    'questions.points'
+                )
+                ->where('questions.round_id', '=', $round->id)
+                ->get()
+                ->toArray();
+        }
+
+        return view('admin.games.show', compact('game', 'answers', 'questions'));
     }
 
     /**
@@ -132,7 +149,6 @@ class GameController extends Controller
         $answerIds = $validatedData['answer_ids'];
 
         //TODO если количество раундов стало меньше чем было, нужно удалить остальные связанные раунды
-        //TODO если количество раундов стало больше чем было, то меняется порядок раундов и вопросов
 
         $game->game_title = $validatedData['game_title'];
         $game->rounds_quantity = $validatedData['rounds_quantity'];
@@ -140,19 +156,27 @@ class GameController extends Controller
 
         // Обновление или создание раундов
         foreach ($rounds as $roundId => $roundTitle) {
-            $round = $game->rounds()->updateOrCreate(
-                ['id' => $roundId],
-                ['round_title' => $roundTitle]
-            );
+            $existingRound = Round::find($roundId);
+
+            if ($existingRound) {
+                // Если запись существует, обновляем ее
+                $existingRound->update(['round_title' => $roundTitle]);
+                $round = $existingRound;
+            } else {
+                // Если запись не существует, создаем новую
+                $round = new Round();
+                $round->round_title = $roundTitle;
+                $game->rounds()->save($round);
+            }
 
             // Обновление или создание вопроса для каждого раунда
-            foreach ($questions[$roundId] as $questionIndex => $questionTitle) {
+            foreach ($questions[$roundId] as $questionId => $questionTitle) {
                 // Получение баллов для вопроса
-                $point = $points[$roundId][$questionIndex];
-                $answerId = $answerIds[$roundId][$questionIndex];
+                $point = $points[$roundId][$questionId];
+                $answerId = $answerIds[$roundId][$questionId];
 
                 // Обновление или создание вопроса с баллами
-                if(!$questionIndex) {
+                if(!$questionId) {
                     $round->questions()->create(
                         [
                             'question_title' => $questionTitle,
@@ -178,10 +202,15 @@ class GameController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param Game $game
+     * @return RedirectResponse
      */
-    public function destroy(Game $game)
+    public function destroy(Game $game): RedirectResponse
     {
-        //
+        $game->delete();
+
+        return redirect()
+            ->route('admin.games.index')
+            ->with('success', "Игра $game->game_title успешно удалена");
     }
 }

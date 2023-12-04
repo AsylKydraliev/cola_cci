@@ -32,7 +32,7 @@
                         <th scope="col" class="w-75">
                             Название
                         </th>
-                        <th scope="col">Действия</th>
+                        <th scope="col" class="text-center">Действия</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,10 +40,10 @@
                         <tr>
                             <td>{{ $game->game_title }}</td>
                             <td>
-                                <div class="d-flex">
+                                <div class="d-flex justify-content-center">
                                     <a
                                         href="{{ route('admin.games.show', ['game' => $game]) }}"
-                                        class="btn d-inline-block icons"
+                                        class="btn text-primary d-inline-block icons"
                                     >
                                         <i class="bi bi-info-circle fs-4"></i>
                                     </a>
@@ -60,6 +60,14 @@
                                         @csrf
                                         <button type="submit" class="btn d-inline-block icons">
                                             <i class="bi bi-play-circle fs-4"></i></button>
+                                    </form>
+
+                                    <form action="{{ route('admin.games.destroy', ['game' => $game]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn d-inline-block icons icon-link-hover">
+                                            <i class="bi bi-trash fs-4 text-danger"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </td>
