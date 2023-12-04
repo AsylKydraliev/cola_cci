@@ -89,7 +89,24 @@ class GameController extends Controller
      */
     public function show(Game $game): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        return view('admin.games.show', compact('game'));
+        $answers = Answer::all();
+        $questions = [];
+
+        foreach ($game->rounds as $round) {
+            $questions[] = Question::query()
+                ->select(
+                    'questions.id',
+                    'questions.question_title',
+                    'questions.round_id',
+                    'questions.answer_id',
+                    'questions.points'
+                )
+                ->where('questions.round_id', '=', $round->id)
+                ->get()
+                ->toArray();
+        }
+
+        return view('admin.games.show', compact('game', 'answers', 'questions'));
     }
 
     /**

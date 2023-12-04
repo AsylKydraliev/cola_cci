@@ -43,7 +43,7 @@
                                 <div class="d-flex">
                                     <a
                                         href="{{ route('admin.games.show', ['game' => $game]) }}"
-                                        class="btn d-inline-block icons"
+                                        class="btn text-primary d-inline-block icons"
                                     >
                                         <i class="bi bi-info-circle fs-4"></i>
                                     </a>
