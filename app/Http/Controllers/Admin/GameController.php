@@ -202,10 +202,15 @@ class GameController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param Game $game
+     * @return RedirectResponse
      */
-    public function destroy(Game $game)
+    public function destroy(Game $game): RedirectResponse
     {
-        //
+        $game->delete();
+
+        return redirect()
+            ->route('admin.games.index')
+            ->with('success', "Игра $game->game_title успешно удалена");
     }
 }
