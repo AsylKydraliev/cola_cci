@@ -46,7 +46,8 @@ $(document).ready(function () {
                     .attr('type', 'text')
                     .attr('name', `rounds[${i}]`)
                     .addClass('form-control mb-2')
-                    .attr('placeholder', 'Введите название раунда');
+                    .attr('placeholder', 'Введите название раунда')
+                    .attr('required', true);
                 const roundLabel = $('<label>')
                     .text('Раунд № ' + i);
                 const addInputButton = $('<button><i class="bi bi-plus-lg"></i>Добавить вопрос</button><br>')
@@ -58,12 +59,14 @@ $(document).ready(function () {
                     .attr('type', 'text')
                     .attr('name', `questions[${i}][]`)
                     .addClass('form-control form-control-sm col me-1')
-                    .attr('placeholder', 'Введите вопрос');
+                    .attr('placeholder', 'Введите вопрос')
+                    .attr('required', true);
 
                 const answerInput = $('<select>')
                     .attr('name', `answer_ids[${i}][]`)
                     .addClass('form-select form-select-sm col me-1')
-                    .attr('placeholder', 'Выберите ответ');
+                    .attr('placeholder', 'Выберите ответ')
+                    .attr('required', true);
                 // Добавление пустого варианта
                 answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
                 // Добавление ответов из массива данных
@@ -75,7 +78,8 @@ $(document).ready(function () {
                     .attr('type', 'number')
                     .attr('name', `points[${i}]`)
                     .addClass('form-control form-control-sm col me-1')
-                    .attr('placeholder', 'Количество баллов за ответ');
+                    .attr('placeholder', 'Количество баллов за ответ')
+                    .attr('required', true);
 
                 const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
                     .attr('type', 'button')
@@ -100,7 +104,8 @@ $(document).ready(function () {
                     .attr('type', 'text')
                     .attr('name', `rounds[${i}]`)
                     .addClass('form-control mb-2')
-                    .attr('placeholder', 'Введите название раунда');
+                    .attr('placeholder', 'Введите название раунда')
+                    .attr('required', true);
                 const roundLabel = $('<label>')
                     .text('Раунд № ' + i);
                 const addInputButton = $('<button><i class="bi bi-plus-lg"></i>Добавить вопрос</button><br>')
@@ -112,12 +117,14 @@ $(document).ready(function () {
                     .attr('type', 'text')
                     .attr('name', `questions[${i}][]`)
                     .addClass('form-control form-control-sm col me-1')
-                    .attr('placeholder', 'Введите вопрос');
+                    .attr('placeholder', 'Введите вопрос')
+                    .attr('required', true);
 
                 const answerInput = $('<select>')
                     .attr('name', `answer_ids[${i}][]`)
                     .addClass('form-select form-select-sm col me-1')
-                    .attr('placeholder', 'Выберите ответ');
+                    .attr('placeholder', 'Выберите ответ')
+                    .attr('required', true);
                 // Добавление пустого варианта
                 answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
                 // Добавление ответов из массива данных
@@ -129,7 +136,8 @@ $(document).ready(function () {
                     .attr('type', 'number')
                     .attr('name', `points[${i}][]`)
                     .addClass('form-control form-control-sm col me-1')
-                    .attr('placeholder', 'Количество баллов за ответ');
+                    .attr('placeholder', 'Количество баллов за ответ')
+                    .attr('required', true);
                 const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
                     .attr('type', 'button')
                     .addClass('btn btn-danger btn-sm deleteBtn');
@@ -162,12 +170,14 @@ $(document).ready(function () {
                 .attr('type', 'text')
                 .attr('name', `questions[${roundIndex}][]`)
                 .addClass('form-control form-control-sm col me-1')
-                .attr('placeholder', 'Введите вопрос');
+                .attr('placeholder', 'Введите вопрос')
+                .attr('required', true);
 
             const answerInput = $('<select>')
                 .attr('name', `answer_ids[${roundIndex}][]`)
                 .addClass('form-select form-select-sm col me-1')
-                .attr('placeholder', 'Выберите ответ');
+                .attr('placeholder', 'Выберите ответ')
+                .attr('required', true);
             // Добавление пустого варианта
             answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
             // Добавление ответов из массива данных
@@ -179,7 +189,8 @@ $(document).ready(function () {
                 .attr('type', 'number')
                 .attr('name', `points[${roundIndex}][]`)
                 .addClass('form-control form-control-sm col me-1')
-                .attr('placeholder', 'Количество баллов за ответ');
+                .attr('placeholder', 'Количество баллов за ответ')
+                .attr('required', true);
 
             const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
                 .attr('type', 'button')

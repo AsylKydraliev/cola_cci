@@ -119,9 +119,11 @@ class GameController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param UpdateGameRequest $request
+     * @param Game $game
+     * @return RedirectResponse
      */
-    public function update(UpdateGameRequest $request, Game $game)
+    public function update(UpdateGameRequest $request, Game $game): RedirectResponse
     {
         $validatedData = $request->validated();
         $rounds = $validatedData['rounds'];
@@ -129,14 +131,45 @@ class GameController extends Controller
         $points = $validatedData['points'];
         $answerIds = $validatedData['answer_ids'];
 
+        //TODO если количество раундов стало меньше чем было, нужно удалить остальные связанные раунды
+        //TODO если количество раундов стало больше чем было, то меняется порядок раундов и вопросов
+
         $game->game_title = $validatedData['game_title'];
         $game->rounds_quantity = $validatedData['rounds_quantity'];
         $game->save();
 
-        foreach ($rounds as $roundIndex => $roundTitle) {
-            $round = $game->rounds()->get($roundIndex);
-            $round->round_title = $roundTitle;
-            $rounds->save();
+        // Обновление или создание раундов
+        foreach ($rounds as $roundId => $roundTitle) {
+            $round = $game->rounds()->updateOrCreate(
+                ['id' => $roundId],
+                ['round_title' => $roundTitle]
+            );
+
+            // Обновление или создание вопроса для каждого раунда
+            foreach ($questions[$roundId] as $questionIndex => $questionTitle) {
+                // Получение баллов для вопроса
+                $point = $points[$roundId][$questionIndex];
+                $answerId = $answerIds[$roundId][$questionIndex];
+
+                // Обновление или создание вопроса с баллами
+                if(!$questionIndex) {
+                    $round->questions()->create(
+                        [
+                            'question_title' => $questionTitle,
+                            'points' => $point,
+                            'answer_id' => $answerId,
+                        ]
+                    );
+                } else {
+                    $round->questions()->update(
+                        [
+                            'question_title' => $questionTitle,
+                            'points' => $point,
+                            'answer_id' => $answerId,
+                        ]
+                    );
+                }
+            }
         }
 
         return redirect()
