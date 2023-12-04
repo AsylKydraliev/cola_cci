@@ -37,4 +37,15 @@ class PartyStage extends Model
     {
         return $this->belongsTo(Party::class);
     }
+
+    /**
+     * @return string[]
+     */
+    public static function getPartyStageType(): array
+    {
+        return [
+            self::TYPE_ROUND => 'Раунд',
+            self::TYPE_QUESTION => 'Вопрос'
+        ];
+    }
 }

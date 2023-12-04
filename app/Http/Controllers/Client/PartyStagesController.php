@@ -9,11 +9,23 @@ use Illuminate\Http\Request;
 
 class PartyStagesController extends Controller
 {
-    public function getPartyStages(Request $request, Party $party)
+    public function getPartyStages(Request $request, string $uuid)
     {
-        $path = $request->path();
+        if(str_contains($request->path(), 'player-game')) {
+            $party = Party::query()->where('player_uuid', '=', $uuid)->first();
 
-        $partyStages = PartyStage::query()->where('party_id', '=', $party->id);
+            $partyStages = PartyStage::query()
+                ->where('party_id', '=', $party->id)
+                ->get();
+        }
+
+        if(str_contains($request->path(), 'moderator-game')) {
+            $party = Party::query()->where('moderator_uuid', '=', $uuid)->first();
+
+            $partyStages = PartyStage::query()
+                ->where('party_id', '=', $party->id)
+                ->get();
+        }
 
         return view('client.partyStages', compact('partyStages'));
     }

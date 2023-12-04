@@ -44,7 +44,6 @@
                 </div>
             </div>
         @endforeach
-    </div>
 @endsection
 
 @push('scripts')

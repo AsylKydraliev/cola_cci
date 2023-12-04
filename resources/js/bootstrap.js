@@ -1,17 +1,21 @@
 import 'bootstrap';
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
+import { Tooltip } from 'bootstrap';
+import { Toast } from 'bootstrap';
 import axios from 'axios';
-window.axios = axios;
-
 import jQuery from 'jquery';
+
+window.axios = axios;
 window.$ = window.jQuery = jQuery;
 
+const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new Tooltip(tooltipTriggerEl);
+});
+
+const toastTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="toast"]'));
+toastTriggerList.map(function (toastTriggerEl) {
+    return new Toast(toastTriggerEl);
+});
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
