@@ -11,15 +11,16 @@ use App\Models\Round;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 
 class PartyController extends Controller
 {
     /**
      * @param Game $game
-     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     * @return RedirectResponse
      */
-    public function store(Game $game): View|\Illuminate\Foundation\Application|Factory|Application
+    public function store(Game $game): RedirectResponse
     {
         $game->load('rounds.questions');
 
@@ -54,8 +55,22 @@ class PartyController extends Controller
         $party->party_stage_id = $minStageId;
         $party->save();
 
-        $parties = Party::query()->where('game_id', '=', $game->id)->get();
+        return redirect()
+            ->back()
+            ->with('success', "Партия  успешно создана");
+    }
 
-        return view('admin.games.parties', compact('parties'));
+    /**
+     * @param Game $game
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     */
+    public function getParties(Game $game): View|\Illuminate\Foundation\Application|Factory|Application
+    {
+        $parties = Party::query()
+            ->where('game_id', '=', $game->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('admin.games.parties', compact('parties', 'game'));
     }
 }

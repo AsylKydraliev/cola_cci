@@ -23,11 +23,15 @@ Route::get('/', function () {
 
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::resource('games', GameController::class);
+    Route::get('parties/{game}', [PartyController::class, 'getParties'])->name('parties');
     Route::post('store_party/{game}', [PartyController::class, 'store'])->name('store_party');
 });
 
-Route::get('player-game/{uuid}', [PartyStagesController::class, 'getPartyStages']);
-Route::get('moderator-game/{uuid}', [PartyStagesController::class, 'getPartyStages']);
+Route::get('player_game/{player_uuid}', [PartyStagesController::class, 'partyStagesForPlayer'])->name('player_game');
+Route::get('moderator_game/{moderator_uuid}', [PartyStagesController::class, 'partyStagesForModerator'])->name('moderator_game');
+Route::get('next_party_stage/{party_id}', [PartyStagesController::class, 'nextPartyStage'])->name('next_party_stage');
+
+Route::post('player_game', [PartyStagesController::class, 'playerSignInGame'])->name('player_game');
 
 Auth::routes();
 

@@ -45,32 +45,48 @@
                                         href="{{ route('admin.games.show', ['game' => $game]) }}"
                                         class="btn text-primary d-inline-block icons"
                                     >
-                                        <i class="bi bi-info-circle fs-4"></i>
+                                        <i
+                                            class="bi bi-info-circle fs-4"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom"
+                                            data-bs-title="Подробнее"
+                                        ></i>
                                     </a>
 
                                     <a
                                         href="{{ route('admin.games.edit', ['game' => $game]) }}"
                                         class="btn d-inline-block icons"
                                     >
-                                        <i class="bi bi-pencil-square fs-4 text-warning"></i>
+                                        <i
+                                            class="bi bi-pencil-square fs-4 text-warning"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom"
+                                            data-bs-title="Редактировать"
+                                        ></i>
                                     </a>
 
-                                    <form
-                                        action="{{ route('admin.store_party', ['game' => $game]) }}"
-                                        method="post"
-                                        id="parties"
+                                    <a
+                                        href="{{ route('admin.parties', ['game' => $game]) }}"
+                                        class="btn d-inline-block icons"
                                     >
-                                        @csrf
-                                        <button type="submit" class="btn d-inline-block icons">
-                                            <i class="bi bi-play-circle fs-4"></i>
-                                        </button>
-                                    </form>
+                                        <i
+                                            class="bi bi-card-list fs-4"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom"
+                                            data-bs-title="Список партий"
+                                        ></i>
+                                    </a>
 
                                     <form action="{{ route('admin.games.destroy', ['game' => $game]) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn d-inline-block icons icon-link-hover">
-                                            <i class="bi bi-trash fs-4 text-danger"></i>
+                                            <i
+                                                class="bi bi-trash fs-4 text-danger"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom"
+                                                data-bs-title="Удалить игру"
+                                            ></i>
                                         </button>
                                     </form>
                                 </div>

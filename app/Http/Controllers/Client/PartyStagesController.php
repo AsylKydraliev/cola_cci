@@ -5,28 +5,76 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Party;
 use App\Models\PartyStage;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class PartyStagesController extends Controller
 {
-    public function getPartyStages(Request $request, string $uuid)
+    /**
+     * @param Party $party
+     * @return \Illuminate\Foundation\Application|View|Factory|Application
+     */
+    public function partyStagesForPlayer(Party $party): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        if(str_contains($request->path(), 'player-game')) {
-            $party = Party::query()->where('player_uuid', '=', $uuid)->first();
+        $partyStage = PartyStage::query()->find($party->party_stage_id);
 
-            $partyStages = PartyStage::query()
-                ->where('party_id', '=', $party->id)
-                ->get();
+        // Если тип Раунд, то возвращаем страницу ожидания игры
+        if ($partyStage->type == PartyStage::TYPE_ROUND) {
+            return view('player.roundGame', compact('partyStage'));
         }
 
-        if(str_contains($request->path(), 'moderator-game')) {
-            $party = Party::query()->where('moderator_uuid', '=', $uuid)->first();
+        // Если тип Вопрос, то возвращаем страницу игры
+        return view('player.questionGame', compact('partyStage'));
+    }
 
-            $partyStages = PartyStage::query()
-                ->where('party_id', '=', $party->id)
-                ->get();
+    /**
+     * @param Party $party
+     * @return \Illuminate\Foundation\Application|View|Factory|Application
+     */
+    public function partyStagesForModerator(Party $party): \Illuminate\Foundation\Application|View|Factory|Application
+    {
+        $partyStage = PartyStage::query()->find($party->party_stage_id);
+
+        // Если тип Раунд, то возвращаем страницу ожидания игры
+        if ($partyStage->type == PartyStage::TYPE_ROUND) {
+            return view('moderator.roundGame', compact('partyStage'));
         }
 
-        return view('client.partyStages', compact('partyStages'));
+        // Если тип Вопрос, то возвращаем страницу игры
+        return view('moderator.questionGame', compact('partyStage'));
+    }
+
+    /**
+     * @param Party $party
+     * @return RedirectResponse
+     */
+    public function nextPartyStage(Party $party): RedirectResponse
+    {
+        $partyStage = PartyStage::query()
+            ->where('party_id', '=', $party->id)
+            ->where('id', '>', $party->party_stage_id)
+            ->orderBy('id')
+            ->first();
+
+        $party->party_stage_id = $partyStage->id;
+        $party->save();
+
+        return redirect()->back();
+    }
+
+    public function playerSignInGame(Request $request)
+    {
+        $request->session()->put('player_' . $request->session()->getId(), [
+            'game_code' => $request->get('game_code'),
+            'name' => $request->get('name')
+        ]);
+
+        // Получение данных из сессии
+        $playerKey = 'player_' . $request->session()->getId();
+        $playerData = $request->session()->get($playerKey);
+        dd(session()->all());
     }
 }

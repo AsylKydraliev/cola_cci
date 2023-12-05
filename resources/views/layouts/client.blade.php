@@ -19,11 +19,27 @@
 </head>
 <body class="antialiased">
 <div>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                Этапы игры
+    <nav class="navbar px-5">
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <img src="{{ asset('images/logo.png') }}" alt="CCI" width="100"/>
             </a>
+            <div>
+                <span class="me-2">
+                    <img src="{{ asset('images/person.png') }}" alt="User" width="50"/>
+                </span>
+                <button
+                    class="menu-btn"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <img src="{{ asset('images/menu.png') }}" alt="menu" width="50"/>
+                </button>
+            </div>
         </div>
     </nav>
 

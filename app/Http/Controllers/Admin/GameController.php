@@ -7,7 +7,6 @@ use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Answer;
 use App\Models\Game;
-use App\Models\Party;
 use App\Models\Question;
 use App\Models\Round;
 use Illuminate\Contracts\Foundation\Application;

@@ -52,7 +52,7 @@ return [
 
         'mailgun' => [
             'transport' => 'mailgun',
-            // 'client' => [
+            // 'player' => [
             //     'timeout' => 5,
             // ],
         ],
@@ -60,7 +60,7 @@ return [
         'postmark' => [
             'transport' => 'postmark',
             // 'message_stream_id' => null,
-            // 'client' => [
+            // 'player' => [
             //     'timeout' => 5,
             // ],
         ],

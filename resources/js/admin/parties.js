@@ -13,9 +13,6 @@ $(document).ready(function () {
 
             // Копируем текст в буфер обмена
             document.execCommand("copy");
-
-            // Визуальное подтверждение
-            alert("Ссылка скопирована в буфер обмена: " + $(inputId).val());
         });
     });
 });
