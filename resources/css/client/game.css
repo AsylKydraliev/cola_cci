@@ -8,7 +8,7 @@
 }
 
 .menu-btn:focus-visible {
-    border: none!important;
+    border: none !important;
 }
 
 .form {
@@ -106,9 +106,10 @@
 }
 
 @media screen and (max-width: 1290px) {
-.pending-content {
-        flex-direction: column!important;
+    .pending-content {
+        flex-direction: column !important;
     }
+
     img {
         max-width: 100%;
     }
@@ -143,13 +144,12 @@
     justify-content: space-between;
 }
 
-
 @media screen and (max-width: 1440px) {
-.game-content {
-        flex-direction: column!important;
+    .game-content {
+        flex-direction: column !important;
     }
 
-.item span {
+    .item span {
         position: absolute;
         top: 5%;
         left: -10%;
@@ -168,4 +168,55 @@
     border-radius: 40px;
     padding: 15px 15px 18px 115px;
     background: #ffe1e1;
+}
+
+.bubble {
+    border-radius: 50%;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.bubble:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 15px 10px rgba(0, 0, 0, 0.25);
+}
+
+.bubble:focus {
+    box-shadow: 1px 1px 15px 14px rgba(44, 22, 22, 0.72);
+}
+
+.bubble:nth-child(3) {
+    margin-top: 30px;
+}
+
+.bubble:nth-child(5) {
+    margin-top: 30px;
+}
+
+.bubble:nth-child(9) {
+    margin-top: -20px;
+}
+
+.bubble:nth-child(10) {
+    margin-top: -50px;
+}
+
+.bubble:nth-child(11) {
+    margin-top: -50px;
+}
+
+.bubble:nth-child(12) {
+    margin-top: -50px;
+}
+
+.bubble:nth-child(13) {
+    margin-top: -60px;
+}
+
+.bubble:nth-child(19) {
+    margin-top: -40px;
 }

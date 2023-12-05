@@ -74,7 +74,6 @@ class PartyStagesController extends Controller
 
         // Получение данных из сессии
         $playerKey = 'player_' . $request->session()->getId();
-        $playerData = $request->session()->get($playerKey);
-        dd(session()->all());
+        $playerSessionData = $request->session()->get($playerKey);
     }
 }
