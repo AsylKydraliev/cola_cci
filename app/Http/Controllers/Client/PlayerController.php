@@ -23,7 +23,7 @@ class PlayerController extends Controller
         $game_code = $request->get('game_code');
         $session_id = session()->getId();
 
-        $party = Party::where('game_code', '=', $game_code)->first();
+        $party = Party::where('game_code', '=', $game_code)->firstOrFail();
         $partyStage = PartyStage::find($party->party_stage_id);
 
         $existingPlayer = Player::where('session_id', '=', $session_id)->first();

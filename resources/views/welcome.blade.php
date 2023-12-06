@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('sign_in_game') }}" method="post">
+        <form action="{{ route('player_game') }}" method="post">
             @csrf
             <div class="mb-3 col-lg-4 col-md-6 col-sm-12">
                 <label for="game_code">Код игры</label>

@@ -18,9 +18,4 @@ use Illuminate\Database\Eloquent\Builder;
 class Player extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'game_code',
-    ];
 }
