@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('party_stage_id')->nullable();
             $table->foreign('party_stage_id')->references('id')->on('party_stages')->noActionOnDelete();
             $table->integer('status')->default(Party::STATUS_ACTIVE);
+            $table->integer('game_code');
             $table->timestamps();
         });
     }

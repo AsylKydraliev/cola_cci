@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
  * @property string|null $players
  * @property int|null $party_stage_id
  * @property int $status
+ * @property int $game_code
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *

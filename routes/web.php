@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\PartyController;
 use App\Http\Controllers\Client\PartyStagesController;
 use App\Http\Controllers\Admin\GameController;
+use App\Http\Controllers\Client\PlayerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,7 @@ Route::get('player_game/{player_uuid}', [PartyStagesController::class, 'partySta
 Route::get('moderator_game/{moderator_uuid}', [PartyStagesController::class, 'partyStagesForModerator'])->name('moderator_game');
 Route::get('next_party_stage/{party_id}', [PartyStagesController::class, 'nextPartyStage'])->name('next_party_stage');
 
-Route::post('player_game', [PartyStagesController::class, 'playerSignInGame'])->name('player_game');
+Route::post('sign_in_game', [PlayerController::class, 'signInGame'])->name('sign_in_game');
 
 Auth::routes();
 

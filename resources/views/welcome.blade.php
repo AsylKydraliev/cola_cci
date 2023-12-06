@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('player_game') }}" method="post">
+        <form action="{{ route('sign_in_game') }}" method="post">
             @csrf
             <div class="mb-3 col-lg-4 col-md-6 col-sm-12">
                 <label for="game_code">Код игры</label>
@@ -10,7 +10,7 @@
                     type="number"
                     name="game_code"
                     id="game_code"
-                    class="form-control"
+                    class="form-control @error('game_code') is-invalid @enderror"
                 />
             </div>
             <div class="mb-3 col-lg-4 col-md-6 col-sm-12">
@@ -19,7 +19,7 @@
                     type="text"
                     name="name"
                     id="name"
-                    class="form-control"
+                    class="form-control @error('name') is-invalid @enderror"
                 />
             </div>
 

@@ -24,11 +24,19 @@ class PartyController extends Controller
     {
         $game->load('rounds.questions');
 
+        $uniqueGameCode = rand(10000, 99999);
+
+        // Проверяем уникальность сгенерированного числа в базе данных
+        while (Party::where('game_code', $uniqueGameCode)->exists()) {
+            $uniqueGameCode = rand(10000, 99999);
+        }
+
         $party = new Party();
         $party->game_id = $game->id;
         $party->moderator_uuid = Str::uuid();
         $party->player_uuid = Str::uuid();
         $party->status = Party::STATUS_ACTIVE;
+        $party->game_code = $uniqueGameCode;
         $party->save();
 
         /** @var Round $round */

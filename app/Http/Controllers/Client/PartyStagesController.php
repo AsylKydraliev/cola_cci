@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Party;
 use App\Models\PartyStage;
+use App\Models\Player;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
 class PartyStagesController extends Controller
@@ -19,15 +19,23 @@ class PartyStagesController extends Controller
      */
     public function partyStagesForPlayer(Party $party): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        $partyStage = PartyStage::query()->find($party->party_stage_id);
+        $session_id = session()->getId();
+        $existingPlayer = Player::where('session_id', '=', $session_id)->first();
 
-        // Если тип Раунд, то возвращаем страницу ожидания игры
-        if ($partyStage->type == PartyStage::TYPE_ROUND) {
-            return view('player.roundGame', compact('partyStage'));
+        if ($existingPlayer) {
+            //если игрок авторизовался возвращаем старницу игру
+            $partyStage = PartyStage::query()->find($party->party_stage_id);
+
+            // Если тип Раунд, то возвращаем страницу ожидания игры
+            if ($partyStage->type == PartyStage::TYPE_ROUND) {
+                return view('player.roundGame', compact('partyStage'));
+            }
+
+            // Если тип Вопрос, то возвращаем страницу игры
+            return view('player.questionGame', compact('partyStage'));
         }
 
-        // Если тип Вопрос, то возвращаем страницу игры
-        return view('player.questionGame', compact('partyStage'));
+        return view('welcome', compact('party'));
     }
 
     /**
@@ -63,17 +71,5 @@ class PartyStagesController extends Controller
         $party->save();
 
         return redirect()->back();
-    }
-
-    public function playerSignInGame(Request $request)
-    {
-        $request->session()->put('player_' . $request->session()->getId(), [
-            'game_code' => $request->get('game_code'),
-            'name' => $request->get('name')
-        ]);
-
-        // Получение данных из сессии
-        $playerKey = 'player_' . $request->session()->getId();
-        $playerSessionData = $request->session()->get($playerKey);
     }
 }
