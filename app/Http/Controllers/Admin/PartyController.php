@@ -35,7 +35,7 @@ class PartyController extends Controller
         $party->game_id = $game->id;
         $party->moderator_uuid = Str::uuid();
         $party->player_uuid = Str::uuid();
-        $party->status = Party::STATUS_ACTIVE;
+        $party->status = Party::STATUS_PENDING;
         $party->game_code = $uniqueGameCode;
         $party->save();
 

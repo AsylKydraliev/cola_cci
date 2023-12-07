@@ -32,7 +32,8 @@ Route::get('player_game/{player_uuid}', [PartyStagesController::class, 'partySta
 Route::get('moderator_game/{moderator_uuid}', [PartyStagesController::class, 'partyStagesForModerator'])->name('moderator_game');
 Route::get('next_party_stage/{party_id}', [PartyStagesController::class, 'nextPartyStage'])->name('next_party_stage');
 
-Route::post('player_game', [PlayerController::class, 'signInGame'])->name('player_game');
+Route::post('player_game_code', [PlayerController::class, 'signInGameWithCode'])->name('player_game_code');
+Route::post('player_game_uuid/{player_uuid}', [PlayerController::class, 'signInGameWithUuid'])->name('player_game_uuid');
 
 Auth::routes();
 

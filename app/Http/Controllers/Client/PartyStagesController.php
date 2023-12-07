@@ -22,8 +22,18 @@ class PartyStagesController extends Controller
         $session_id = session()->getId();
         $existingPlayer = Player::where('session_id', '=', $session_id)->first();
 
+        // если $party->status = STATUS_STARTED и сессии нет то возвращаем view о том что игра началась
+        if ($party->status == Party::STATUS_STARTED && !$existingPlayer) {
+            return view('player.gameWasStarted');
+        }
+
+        // если статус STATUS_COMPLETED то возвращаем view о том что игра закончилась
+        if ($party->status == Party::STATUS_FINISHED) {
+            return view('player.gameOver');
+        }
+
         if ($existingPlayer) {
-            //если игрок авторизовался возвращаем старницу игру
+            //если игрок авторизовался возвращаем старницу игры
             $partyStage = PartyStage::query()->find($party->party_stage_id);
 
             // Если тип Раунд, то возвращаем страницу ожидания игры
@@ -35,7 +45,8 @@ class PartyStagesController extends Controller
             return view('player.questionGame', compact('partyStage'));
         }
 
-        return view('welcome', compact('party'));
+        // если $party->status = STATUS_PENDING и сессии нет то возвращаем страницу входа в игру
+        return view('player.playerLogin', compact('party'));
     }
 
     /**

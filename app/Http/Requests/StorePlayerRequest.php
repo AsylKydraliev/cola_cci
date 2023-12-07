@@ -24,7 +24,7 @@ class StorePlayerRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2', 'max:255'],
-            'game_code' => ['required', 'numeric'],
+            'game_code' => ['nullable', 'numeric'],
         ];
     }
 }

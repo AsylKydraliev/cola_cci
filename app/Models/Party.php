@@ -23,6 +23,7 @@ use Illuminate\Support\Carbon;
  *
  * @property-read Game $game
  * @property-read PartyStage $stages
+ * @property-read PartyStage $stage
  *
  * @mixin Builder
  */
@@ -30,9 +31,12 @@ class Party extends Model
 {
     use HasFactory;
 
-    public const STATUS_ACTIVE = 1;
+    // TODO если статус STATUS_PENDING и сессии нет то возвращать view с game_code name
+    // TODO если статус STATUS_STARTED и сессии нет то возвращать view о том что игра началась
+    // TODO если статус STATUS_COMPLETED то возвращать view о том что игра закончилась
+    public const STATUS_PENDING = 1;
     public const STATUS_STARTED = 2;
-    public const STATUS_COMPLETED = 3;
+    public const STATUS_FINISHED = 3;
 
     /**
      * @return BelongsTo
@@ -48,5 +52,13 @@ class Party extends Model
     public function stages(): HasMany
     {
         return $this->hasMany(PartyStage::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function stage(): BelongsTo
+    {
+        return $this->belongsTo(PartyStage::class, 'party_stage_id');
     }
 }
