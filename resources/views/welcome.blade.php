@@ -11,8 +11,11 @@
                     name="game_code"
                     id="game_code"
                     class="form-control @error('game_code') is-invalid @enderror"
-                    required
+                    value="{{ old('game_code') }}"
                 />
+                @error('game_code')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
             <div class="mb-3 col-lg-4 col-md-6 col-sm-12">
                 <label for="name">Ваше имя</label>
@@ -21,8 +24,11 @@
                     name="name"
                     id="name"
                     class="form-control @error('name') is-invalid @enderror"
-                    required
+                    value="{{ old('name') }}"
                 />
+                @error('name')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-danger">Войти</button>

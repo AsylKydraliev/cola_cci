@@ -65,10 +65,13 @@ $(document).ready(function () {
                 const answerInput = $('<select>')
                     .attr('name', `answer_ids[${i}][]`)
                     .addClass('form-select form-select-sm col me-1')
-                    .attr('placeholder', 'Выберите ответ')
                     .attr('required', true);
                 // Добавление пустого варианта
-                answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
+                answerInput.append($('<option>')
+                    .attr('value', '')
+                    .attr('disabled', true)
+                    .attr('selected', true)
+                    .text('Выберите ответ'));
                 // Добавление ответов из массива данных
                 answers.forEach(function (answer) {
                     answerInput.append($('<option>').attr('value', answer.id).text(answer.answer_title));
@@ -123,10 +126,13 @@ $(document).ready(function () {
                 const answerInput = $('<select>')
                     .attr('name', `answer_ids[${i}][]`)
                     .addClass('form-select form-select-sm col me-1')
-                    .attr('placeholder', 'Выберите ответ')
-                    .attr('required', true);
+                    .attr('required', true)
                 // Добавление пустого варианта
-                answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
+                answerInput.append($('<option>')
+                    .attr('value', '')
+                    .attr('disabled', true)
+                    .attr('selected', true)
+                    .text('Выберите ответ'));
                 // Добавление ответов из массива данных
                 answers.forEach(function (answer) {
                     answerInput.append($('<option>').attr('value', answer.id).text(answer.answer_title));
@@ -176,10 +182,13 @@ $(document).ready(function () {
             const answerInput = $('<select>')
                 .attr('name', `answer_ids[${roundIndex}][]`)
                 .addClass('form-select form-select-sm col me-1')
-                .attr('placeholder', 'Выберите ответ')
                 .attr('required', true);
             // Добавление пустого варианта
-            answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
+            answerInput.append($('<option>')
+                .attr('value', '')
+                .attr('disabled', true)
+                .attr('selected', true)
+                .text('Выберите ответ'));
             // Добавление ответов из массива данных
             answers.forEach(function (answer) {
                 answerInput.append($('<option>').attr('value', answer.id).text(answer.answer_title));

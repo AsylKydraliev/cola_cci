@@ -1,11 +1,13 @@
-<div class="text-center position-relative mt-4 w-100 mx-auto">
+<div class="text-center mt-4 w-100 mx-auto">
     <div class="mx-5">
-        <div>
+        <div class="position-relative">
             <img src="{{ asset('images/title-img.png') }}" alt="" width="100%" height="130">
-            <h1 class="pending-title">
-                Ожидание начала игры
-                <img src="{{ asset('images/clock.png') }}" alt="" width="50"/>
-            </h1>
+            <div class="text-container">
+                <h1 class="pending-title">
+                    Ожидание начала игры
+                    <img src="{{ asset('images/clock.png') }}" alt="" width="50"/>
+                </h1>
+            </div>
         </div>
     </div>
 </div>

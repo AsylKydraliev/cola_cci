@@ -24,7 +24,17 @@ class StorePlayerRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2', 'max:255'],
-            'game_code' => ['nullable', 'numeric'],
+            'game_code' => ['required', 'numeric'],
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function messages(): array
+    {
+        return [
+            'game_code' => 'Поле код игры обязательно'
         ];
     }
 }

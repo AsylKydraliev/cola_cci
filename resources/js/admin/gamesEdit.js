@@ -32,7 +32,11 @@ $(document).ready(function () {
             .addClass('form-select form-select-sm col me-1')
             .attr('placeholder', 'Выберите ответ');
         // Добавление пустого варианта
-        answerInput.append($('<option>').attr('value', '').text('Выберите ответ'));
+        answerInput.append($('<option>')
+            .attr('disabled', true)
+            .attr('selected', true)
+            .attr('value', '')
+            .text('Выберите ответ'));
         answers.forEach(function (answer) {
             answerInput.append($('<option>').attr('value', answer.id).text(answer.answer_title));
         });

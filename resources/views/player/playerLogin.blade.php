@@ -15,6 +15,7 @@
                     id="name"
                     class="form-control @error('name') is-invalid @enderror"
                     required
+                    value="{{ old('name') }}"
                 />
             </div>
 

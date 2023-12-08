@@ -108,7 +108,7 @@
                                         class="form-select form-select-sm"
                                         required
                                     >
-                                        <option value="">Выберите ответ</option>
+                                        <option value="" disabled>Выберите ответ</option>
                                         @foreach($answers as $answer)
                                             <option
                                                 value="{{ $answer->id }}"
