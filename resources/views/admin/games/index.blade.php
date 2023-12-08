@@ -70,10 +70,10 @@
                                         class="btn d-inline-block icons"
                                     >
                                         <i
-                                            class="bi bi-card-list fs-4"
+                                            class="bi bi-plus-circle fs-4"
                                             data-bs-toggle="tooltip"
                                             data-bs-placement="bottom"
-                                            data-bs-title="Список партий"
+                                            data-bs-title="Создать партию"
                                         ></i>
                                     </a>
 
@@ -85,7 +85,7 @@
                                                 class="bi bi-trash fs-4 text-danger"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="bottom"
-                                                data-bs-title="Удалить игру"
+                                                data-bs-title="Удалить"
                                             ></i>
                                         </button>
                                     </form>
@@ -94,13 +94,11 @@
                         </tr>
                     @endforeach
                     </tbody>
-                    @if(count($games) > 10)
-                        <tfoot>
-                        <tr>
-                            <th colspan="13">{{ $games->links() }}</th>
-                        </tr>
-                        </tfoot>
-                    @endif
+                    <tfoot>
+                    <tr>
+                        <th colspan="13">{{ $games->links() }}</th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
