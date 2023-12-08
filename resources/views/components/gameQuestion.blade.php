@@ -1,82 +1,80 @@
-<div class="text-center position-relative mt-4 w-100 mx-auto">
+<div class="text-center mt-4 w-100 mx-auto">
     <div class="mx-5">
-        <div>
+        <div class="position-relative">
             <img src="{{ asset('images/title-img.png') }}" alt="" width="100%" height="130">
-            <h1 class="pending-title">{{ $partyStage->title }}</h1>
+            <div class="text-container">
+                <h1 class="pending-title">{{ $partyStage->title }}</h1>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="d-flex flex-row justify-content-between gap-2 mx-5 game-content mt-4">
+<div class="d-flex flex-wrap gap-2 mx-5 game-content mt-4">
     <div class="position-relative">
+        <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="1250px">
+        <span id="answer" data-answer="{{ $partyStage->answer->answer_title }}"></span>
+
         <div class="bubbles d-flex gap-4 flex-wrap align-items-start justify-content-center">
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="150" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="100" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
             <button class="bubble me-5">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="120" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="150"  />
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="100" />
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="80" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
             </button>
 
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="100"/>
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="100" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="120" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="150" />
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200" />
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="80" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
             </button>
 
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="100" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="120" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="150" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="120" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="100"/>
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
             <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="150" />
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
+            </button>
+            <button class="bubble">
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
+            </button>
+            <button class="bubble">
+                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
             </button>
         </div>
-        <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="100%">
     </div>
     <div class="game-leaders">
         <div class="game-leaders-list">
@@ -116,5 +114,5 @@
 </div>
 
 @push('scripts')
-    @vite(['resources/css/client/game.css'])
+    @vite(['resources/css/client/game.css', 'resources/js/client/game.js'])
 @endpush

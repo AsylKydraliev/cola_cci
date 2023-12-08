@@ -40,6 +40,14 @@ class PartyStage extends Model
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function answer(): BelongsTo
+    {
+        return $this->belongsTo(Answer::class);
+    }
+
+    /**
      * @return string[]
      */
     public static function getPartyStageType(): array

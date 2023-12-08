@@ -32,6 +32,11 @@ class PartyStagesController extends Controller
             return view('player.gameOver');
         }
 
+        // если статус STATUS_PENDING и сессии нет то возвращаем на страницу входа
+        if ($party->status == Party::STATUS_PENDING && !$existingPlayer) {
+            return view('welcome');
+        }
+
         if ($existingPlayer) {
             //если игрок авторизовался возвращаем старницу игры
             $partyStage = PartyStage::query()->find($party->party_stage_id);
@@ -45,7 +50,6 @@ class PartyStagesController extends Controller
             return view('player.questionGame', compact('partyStage'));
         }
 
-        // если $party->status = STATUS_PENDING и сессии нет то возвращаем страницу входа в игру
         return view('player.playerLogin', compact('party'));
     }
 
@@ -77,6 +81,19 @@ class PartyStagesController extends Controller
             ->where('id', '>', $party->party_stage_id)
             ->orderBy('id')
             ->first();
+
+        if ($party->status === Party::STATUS_PENDING) {
+            $party->status = Party::STATUS_STARTED;
+        }
+
+        if (!$partyStage && $party->status === Party::STATUS_STARTED ||
+            !$partyStage && $party->status === Party::STATUS_FINISHED)
+        {
+            $party->status = Party::STATUS_FINISHED;
+            $party->save();
+
+            return redirect()->back()->with('finish', 'Игра окончена');
+        }
 
         $party->party_stage_id = $partyStage->id;
         $party->save();
