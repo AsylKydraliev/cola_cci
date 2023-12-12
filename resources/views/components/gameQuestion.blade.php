@@ -9,106 +9,43 @@
     </div>
 </div>
 
+<form method="POST" id="player_id">
+    @csrf
+</form>
+
+@if($player)
+    <input value="{{ $existingPlayer->id }}" name="current_player_id" type="hidden">
+    <input value="{{ $partyStage->id }}" name="party_stage_id" type="hidden">
+@endif
+
+@if($partyStage->player_winner && $partyStage->type == \App\Models\PartyStage::TYPE_QUESTION && $player)
+    <input value="1" name="modal" type="hidden">
+    <input value="{{ $partyStage->player_winner->id }}" name="player_winner_id" type="hidden">
+    <input value="{{ $partyStage->player_winner->name }}" name="player_winner_name" type="hidden">
+@endif
+
 <div class="d-flex flex-wrap gap-2 mx-5 game-content mt-4">
     <div class="position-relative">
         <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="1250px">
         <span id="answer" data-answer="{{ $partyStage->answer->answer_title }}"></span>
 
         <div class="bubbles d-flex gap-4 flex-wrap align-items-start justify-content-center">
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble me-5">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
-            </button>
-
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
-            </button>
-
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="200"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="170"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
-            <button class="bubble">
-                <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="130"/>
-            </button>
+            @foreach (\App\Models\Answer::shuffleAnswers() as $answer)
+                <button class="bubble @if($player) bubble-player @endif">
+                    <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="{{ $answer['answer_width'] }}"/>
+                    <span class="answer">{{ $answer['answer_title'] }}</span>
+                </button>
+            @endforeach
         </div>
     </div>
     <div class="game-leaders">
         <div class="game-leaders-list">
             <div class="game-leaders-label mb-4">Лидеры турнира</div>
-
-            <div class="px-3 d-flex flex-column gap-3">
-                <div class="list-item d-flex">
-                    <img src="{{ asset('images/cup-gold.png') }}" alt="" width="60" height="100%">
-                    <div class="item position-relative">
-                        <img src="{{asset('images/gold-bg.png')}}" alt="" width="100%">
-                        <span class="list-item-info">Михаил Федоров <span class="ms-5">456</span></span>
-                    </div>
+            @if(isset($points))
+                <div class="px-3 d-flex flex-column gap-3">
+                    @include('components.gameLeadersList', ['points' => $points])
                 </div>
-                <div class="list-item d-flex">
-                    <img src="{{ asset('images/cup-silver.png') }}" alt="" width="60" height="100%">
-                    <div class="item position-relative">
-                        <img src="{{ asset('images/silver-bg.png') }}" alt="" width="100%">
-                        <span class="list-item-info">Михаил Федоров <span class="ms-5">456</span></span>
-                    </div>
-                </div>
-                <div class="list-item d-flex">
-                    <img src="{{ asset('images/cup-bronze.png') }}" alt="" width="60" height="100%">
-                    <div class="item position-relative">
-                        <img src="{{ asset('images/bronze-bg.png' )}}" alt="" width="100%">
-                        <span class="list-item-info">Михаил Федоров <span class="ms-5">456</span></span>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="item-other">Михаил Федоров <span class="ms-5">456</span></div>
-                </div>
-                <div class="list-item">
-                    <div class="item-other">Михаил Федоров <span class="ms-5">456</span></div>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
 </div>

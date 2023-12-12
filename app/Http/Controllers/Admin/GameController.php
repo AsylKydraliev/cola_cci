@@ -23,6 +23,7 @@ class GameController extends Controller
     {
         $games = Game::query()
             ->with(['rounds'])
+            ->latest('id')
             ->paginate(10);
 
         return view('admin.games.index', compact('games'));

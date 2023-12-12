@@ -34,6 +34,7 @@ Route::get('next_party_stage/{party_id}', [PartyStagesController::class, 'nextPa
 
 Route::post('player_game_code', [PlayerController::class, 'signInGameWithCode'])->name('player_game_code');
 Route::post('player_game_uuid/{player_uuid}', [PlayerController::class, 'signInGameWithUuid'])->name('player_game_uuid');
+Route::post('save_player_winner/{party_stage}', [PartyStagesController::class, 'savePlayerWinner'])->name('save_player_winner');
 
 Auth::routes();
 

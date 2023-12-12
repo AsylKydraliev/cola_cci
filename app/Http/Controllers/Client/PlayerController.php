@@ -5,11 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePlayerRequest;
 use App\Models\Party;
-use App\Models\PartyStage;
 use App\Models\Player;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
@@ -38,19 +34,20 @@ class PlayerController extends Controller
         return Redirect::route('player_game', ['player_uuid' => $party->player_uuid]);
     }
 
+
     /**
      * @param StorePlayerRequest $request
      * @param Party $party
-     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     * @return RedirectResponse
      */
-    public function signInGameWithUuid(StorePlayerRequest $request, Party $party): View|\Illuminate\Foundation\Application|Factory|Application
+    public function signInGameWithUuid(StorePlayerRequest $request, Party $party): RedirectResponse
     {
         $session_id = session()->getId();
 
-        $existingPlayer = Player::where('session_id', '=', $session_id)->first();
-        $partyStage = $party->stage;
-
-        // если игрока с такой сессией нет, то создаем его и пропускаем к партии
+        $existingPlayer = Player::query()
+            ->where('session_id', '=', $session_id)
+            ->where('party_id', '=', $party->id)
+            ->first();
         if (!$existingPlayer) {
             $player = new Player();
             $player->name = $request->get('name');
@@ -59,11 +56,6 @@ class PlayerController extends Controller
             $player->save();
         }
 
-        // Если тип Раунд, то возвращаем страницу ожидания игры
-        if ($partyStage->type == PartyStage::TYPE_ROUND) {
-            return view('player.roundGame', compact('partyStage'));
-        }
-        // Если тип Вопрос, то возвращаем страницу игры
-        return view('player.questionGame', compact('partyStage'));
+        return Redirect::route('player_game', ['player_uuid' => $party->player_uuid]);
     }
 }

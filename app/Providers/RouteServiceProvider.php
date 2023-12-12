@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Party;
+use App\Models\PartyStage;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -37,6 +38,10 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('party_id', function ($party_id) {
             return Party::query()->find($party_id);
+        });
+
+        Route::bind('party_stage', function ($id) {
+            return PartyStage::query()->find($id);
         });
 
         RateLimiter::for('api', function (Request $request) {

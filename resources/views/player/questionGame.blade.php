@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        @include('components.gameQuestion', ['partyStage' => $partyStage])
+        @include('components.gameQuestion', ['partyStage' => $partyStage, 'player' => true])
     </div>
 @endsection
 

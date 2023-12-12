@@ -1,13 +1,21 @@
-@extends('layouts.client')
+@extends('layouts.gameFinish')
 
 @section('content')
     <div class="container-fluid">
-        @if(session('finish') || $partyStage->party->status === \App\Models\Party::STATUS_FINISHED)
-            <div class="container alert alert-danger my-3">
-                <h1 class="text-center">{{ session('finish') ?? 'Игра окончена' }} </h1>
+        @if(session('points') || $partyStage->party->status === \App\Models\Party::STATUS_FINISHED)
+            <h1 class="mb-4 text-center">Игра окончена</h1>
+            <div class="game-leaders">
+                <div class="game-leaders-list">
+                    <div class="game-leaders-label mb-4">Лидеры турнира</div>
+                    @if(isset($points))
+                        <div class="px-3 d-flex flex-column gap-3 p-4">
+                            @include('components.gameLeadersList', ['points' => $points])
+                        </div>
+                    @endif
+                </div>
             </div>
         @else
-            @include('components.gameQuestion', ['partyStage' => $partyStage])
+            @include('components.gameQuestion', ['partyStage' => $partyStage, 'player' => false])
 
             <div class="text-end">
                 <a class="btn btn-danger px-5 py-2 me-5"

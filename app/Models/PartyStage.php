@@ -16,10 +16,10 @@ use Illuminate\Support\Carbon;
  * @property string $title
  * @property int|null $answer_id
  * @property int $points
- * @property string|null $player_winner
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
+ * @property Player|null $player_winner
  * @property-read Party $party
  *
  * @mixin Builder
@@ -30,6 +30,8 @@ class PartyStage extends Model
 
     public const TYPE_ROUND = 1;
     public const TYPE_QUESTION = 2;
+
+    protected $fillable = ['player_winner_id'];
 
     /**
      * @return BelongsTo
@@ -45,6 +47,14 @@ class PartyStage extends Model
     public function answer(): BelongsTo
     {
         return $this->belongsTo(Answer::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function player_winner(): BelongsTo
+    {
+        return $this->belongsTo(Player::class, 'player_winner_id');
     }
 
     /**

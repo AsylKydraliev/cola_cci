@@ -21,7 +21,6 @@
 <div>
     <main class="py-4">
         <div class="container text-center pt-5">
-            <img src="{{ asset('images/game-over.png') }}" alt="Game Started" width="400"/>
             @yield('content')
         </div>
     </main>

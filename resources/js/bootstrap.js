@@ -3,6 +3,7 @@ import { Tooltip } from 'bootstrap';
 import { Toast } from 'bootstrap';
 import axios from 'axios';
 import jQuery from 'jquery';
+import Swal from 'sweetalert2';
 
 window.axios = axios;
 window.$ = window.jQuery = jQuery;
@@ -16,6 +17,8 @@ const toastTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 toastTriggerList.map(function (toastTriggerEl) {
     return new Toast(toastTriggerEl);
 });
+
+window.Swal = Swal;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

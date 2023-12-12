@@ -19,7 +19,12 @@ return new class extends Migration
             $table->unsignedBigInteger('answer_id')->nullable();
             $table->foreign('answer_id')->references('id')->on('answers')->noActionOnDelete();
             $table->integer('points')->default(0);
-            $table->string('player_winner')->nullable();
+            $table->unsignedBigInteger('player_winner_id')->nullable();
+            $table->foreign('player_winner_id')
+                ->references('id')
+                ->on('players')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->timestamps();
         });
     }

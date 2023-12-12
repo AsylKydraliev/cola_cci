@@ -61,4 +61,12 @@ class Party extends Model
     {
         return $this->belongsTo(PartyStage::class, 'party_stage_id');
     }
+
+    /**
+     * @return HasMany
+     */
+    public function players(): HasMany
+    {
+        return $this->hasMany(Player::class);
+    }
 }
