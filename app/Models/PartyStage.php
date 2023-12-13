@@ -34,6 +34,17 @@ class PartyStage extends Model
     protected $fillable = ['player_winner_id'];
 
     /**
+     * @return string[]
+     */
+    public static function getPartyStageType(): array
+    {
+        return [
+            self::TYPE_ROUND => 'Раунд',
+            self::TYPE_QUESTION => 'Вопрос',
+        ];
+    }
+
+    /**
      * @return BelongsTo
      */
     public function party(): BelongsTo
@@ -55,16 +66,5 @@ class PartyStage extends Model
     public function player_winner(): BelongsTo
     {
         return $this->belongsTo(Player::class, 'player_winner_id');
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getPartyStageType(): array
-    {
-        return [
-            self::TYPE_ROUND => 'Раунд',
-            self::TYPE_QUESTION => 'Вопрос'
-        ];
     }
 }

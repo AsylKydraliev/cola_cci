@@ -1,32 +1,31 @@
-@foreach($points as $point)
+@foreach($points as $key => $point)
     <div class="list-item d-flex">
-        <img src="{{ asset('images/cup-gold.png') }}" alt="" width="60" height="100%">
-        <div class="item position-relative">
-            <img src="{{asset('images/gold-bg.png')}}" alt="" width="100%">
-            <span class="list-item-info">
-                {{ $point->name }}
-                <span class="ms-5">{{ $point->points ?? 0 }}</span>
-            </span>
-        </div>
+        @php
+            $cupImages = [
+                0 => ['cup' => 'gold', 'bg' => 'gold-bg'],
+                1 => ['cup' => 'silver', 'bg' => 'silver-bg'],
+                2 => ['cup' => 'bronze', 'bg' => 'bronze-bg'],
+            ];
+        @endphp
+
+        @if($key <= 2)
+            <div class="list-item d-flex">
+                <img src="{{ asset("images/cup-{$cupImages[$key]['cup']}.png") }}" alt="" width="60" height="100%">
+                <div class="item position-relative">
+                    <img src="{{ asset("images/{$cupImages[$key]['bg']}.png") }}" alt="" width="100%">
+                    <span class="list-item-info">
+                        {{ $point['name'] }}
+                        <span class="ms-5">{{ $point['points'] ?? 0 }}</span>
+                    </span>
+                </div>
+            </div>
+        @else
+            <div class="list-item w-100">
+                <div class="item-other">
+                    {{ $point['name'] }}
+                    <span class="ms-5">{{ $point['points'] ?? 0 }}</span>
+                </div>
+            </div>
+        @endif
     </div>
 @endforeach
-{{--        <div class="list-item d-flex">--}}
-{{--            <img src="{{ asset('images/cup-silver.png') }}" alt="" width="60" height="100%">--}}
-{{--            <div class="item position-relative">--}}
-{{--                <img src="{{ asset('images/silver-bg.png') }}" alt="" width="100%">--}}
-{{--                <span class="list-item-info">Михаил Федоров <span class="ms-5">456</span></span>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        <div class="list-item d-flex">--}}
-{{--            <img src="{{ asset('images/cup-bronze.png') }}" alt="" width="60" height="100%">--}}
-{{--            <div class="item position-relative">--}}
-{{--                <img src="{{ asset('images/bronze-bg.png' )}}" alt="" width="100%">--}}
-{{--                <span class="list-item-info">Михаил Федоров <span class="ms-5">456</span></span>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        <div class="list-item">--}}
-{{--            <div class="item-other">Михаил Федоров <span class="ms-5">456</span></div>--}}
-{{--        </div>--}}
-{{--        <div class="list-item">--}}
-{{--            <div class="item-other">Михаил Федоров <span class="ms-5">456</span></div>--}}
-{{--        </div>--}}

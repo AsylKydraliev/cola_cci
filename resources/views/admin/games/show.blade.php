@@ -80,40 +80,5 @@
                 </div>
             @endforeach
         </div>
-
-
-    {{--            <div id="question" class="tab-content" style="display: none">--}}
-    {{--                <h3>Шаг 2</h3>--}}
-
-    {{--                <hr>--}}
-
-    {{--                @foreach($parties as $party)--}}
-    {{--                    <div class="mb-3">--}}
-    {{--                        <label for="client_uuid">Ссылка для участников игры</label>--}}
-    {{--                        <input--}}
-    {{--                            name="client_uuid"--}}
-    {{--                            id="client_uuid"--}}
-    {{--                            value="{{ $party->client_uuid }}"--}}
-    {{--                            class="form-control"--}}
-    {{--                            readonly--}}
-    {{--                        />--}}
-    {{--                    </div>--}}
-
-    {{--                    <div class="mb-3">--}}
-    {{--                        <label for="moderator_uuid">Ссылка для участников игры</label>--}}
-    {{--                        <input--}}
-    {{--                            name="moderator_uuid"--}}
-    {{--                            id="moderator_uuid"--}}
-    {{--                            value="{{ $party->client_uuid }}"--}}
-    {{--                            class="form-control"--}}
-    {{--                            readonly--}}
-    {{--                        />--}}
-    {{--                    </div>--}}
-    {{--                @endforeach--}}
-
-    {{--                <div class="text-end mt-4">--}}
-    {{--                    <button type="button" class="btn btn-outline-secondary prev-step">Вернуться</button>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
     </div>
 @endsection

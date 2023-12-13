@@ -94,13 +94,12 @@ class PartyStagesController extends Controller
             ->groupBy('player_winner_id');
 
         return $party->players()
+            ->select(['players.name', 'party_stages.points'])
             ->leftJoinSub($partyStages, 'party_stages', function ($join) {
                 $join->on('party_stages.player_winner_id', '=', 'players.id');
             })
-            ->where('party_id', '=', $party->id)
             ->orderByDesc('party_stages.points')
-            ->limit(5)
-            ->get(['players.name', 'party_stages.points']);
+            ->get();
     }
 
     /**

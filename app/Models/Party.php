@@ -31,12 +31,33 @@ class Party extends Model
 {
     use HasFactory;
 
-    // TODO если статус STATUS_PENDING и сессии нет то возвращать view с game_code name
-    // TODO если статус STATUS_STARTED и сессии нет то возвращать view о том что игра началась
-    // TODO если статус STATUS_COMPLETED то возвращать view о том что игра закончилась
     public const STATUS_PENDING = 1;
     public const STATUS_STARTED = 2;
     public const STATUS_FINISHED = 3;
+
+    /**
+     * @return string[]
+     */
+    public static function getStatus(): array
+    {
+        return [
+            self::STATUS_PENDING => 'Ожидание игры',
+            self::STATUS_STARTED => 'Игра началась',
+            self::STATUS_FINISHED => 'Игра окончена'
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getStatusColor(): array
+    {
+        return [
+            self::STATUS_PENDING => 'warning',
+            self::STATUS_STARTED => 'success',
+            self::STATUS_FINISHED => 'danger'
+        ];
+    }
 
     /**
      * @return BelongsTo

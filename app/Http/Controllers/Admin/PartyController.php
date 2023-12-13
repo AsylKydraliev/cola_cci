@@ -11,6 +11,7 @@ use App\Models\Round;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 
@@ -80,5 +81,38 @@ class PartyController extends Controller
             ->get();
 
         return view('admin.games.parties', compact('parties', 'game'));
+    }
+
+    /**
+     * @param Party $party
+     * @return Collection
+     */
+    private function getPoints(Party $party): Collection
+    {
+        $partyStages = PartyStage::query()
+            ->selectRaw('SUM(points) as points, player_winner_id')
+            ->where('party_id', '=', $party->id)
+            ->groupBy('player_winner_id');
+
+        return $party->players()
+            ->select(['players.name', 'party_stages.points'])
+            ->leftJoinSub($partyStages, 'party_stages', function ($join) {
+                $join->on('party_stages.player_winner_id', '=', 'players.id');
+            })
+            ->orderByDesc('party_stages.points')
+            ->get();
+    }
+
+    /**
+     * @param Party $party
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     */
+    public function showPartyStages(Party $party): View|\Illuminate\Foundation\Application|Factory|Application
+    {
+        $points = $this->getPoints($party);
+        $partyStages = $party->stages;
+        $partyStages->load('answer');
+
+        return view('admin.partyStages.partyStages', compact('partyStages', 'points'));
     }
 }
