@@ -169,15 +169,6 @@
     .game-content {
         flex-direction: column !important;
     }
-
-    .item span {
-        position: absolute;
-        top: 5%;
-        left: -10%;
-        color: white;
-        font-size: 44px;
-        transform: translate(50%, 50%);
-    }
 }
 
 .bubbles {
@@ -190,8 +181,9 @@
 
 .item-other {
     border-radius: 40px;
-    padding: 15px 15px 18px 115px;
+    padding: 8px 8px 8px 110px;
     background: #ffe1e1;
+    text-align: left;
 }
 
 .bubble {

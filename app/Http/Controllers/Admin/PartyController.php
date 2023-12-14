@@ -111,7 +111,7 @@ class PartyController extends Controller
     {
         $points = $this->getPoints($party);
         $partyStages = $party->stages;
-        $partyStages->load('answer');
+        $partyStages->load('answer', 'player_winner');
 
         return view('admin.partyStages.partyStages', compact('partyStages', 'points'));
     }
