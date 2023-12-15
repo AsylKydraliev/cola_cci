@@ -78,6 +78,15 @@ $(document).ready(function () {
         isTimerRunning = true;
         setTimeout(updateTimer, 1000);
     });
+
+    const party_id = $('#party_id').val();
+
+    console.log(party_id)
+    const channelGameParties = pusher.subscribe('gameParties.party.' + party_id);
+    channelGameParties.bind('game-parties-update', function () {
+        console.log('websocket');
+        location.reload();
+    });
 });
 
 

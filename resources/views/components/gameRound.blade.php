@@ -1,3 +1,5 @@
+<input type="hidden" id="party_id" value="{{ $partyStage->party_id }}">
+
 <div class="text-center mt-4 w-100 mx-auto">
     <div class="mx-5">
         <div class="position-relative">

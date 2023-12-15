@@ -4,22 +4,25 @@ import { Toast } from 'bootstrap';
 import axios from 'axios';
 import jQuery from 'jquery';
 import Swal from 'sweetalert2';
-
-window.axios = axios;
-window.$ = window.jQuery = jQuery;
+import Pusher from 'pusher-js';
 
 const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new Tooltip(tooltipTriggerEl);
 });
-
 const toastTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="toast"]'));
 toastTriggerList.map(function (toastTriggerEl) {
     return new Toast(toastTriggerEl);
 });
+const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    encrypted: true
+});
 
+window.axios = axios;
 window.Swal = Swal;
-
+window.pusher = pusher;
+window.$ = window.jQuery = jQuery;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

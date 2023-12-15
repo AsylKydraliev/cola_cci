@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\GamePartiesUpdateEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Game;
 use App\Models\Party;
 use App\Models\PartyStage;
 use App\Models\Question;
 use App\Models\Round;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
+use Pusher\PusherException;
 
 class PartyController extends Controller
 {
+
     /**
      * @param Game $game
      * @return RedirectResponse
+     * @throws GuzzleException
+     * @throws PusherException
      */
     public function store(Game $game): RedirectResponse
     {

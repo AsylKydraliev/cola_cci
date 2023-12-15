@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\GamePartiesUpdateEvent;
+use App\Events\OrderDeliveryInYandexEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

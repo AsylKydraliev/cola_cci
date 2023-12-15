@@ -24,6 +24,8 @@
     <input value="{{ $partyStage->player_winner->name }}" name="player_winner_name" type="hidden">
 @endif
 
+<input type="hidden" id="party_id" value="{{ $partyStage->party_id }}">
+
 <div class="d-flex flex-wrap gap-2 mx-5 game-content mt-4">
     <div class="position-relative">
         <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="1250px">

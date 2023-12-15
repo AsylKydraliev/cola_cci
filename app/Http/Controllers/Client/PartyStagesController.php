@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Events\GamePartiesUpdateEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Party;
 use App\Models\PartyStage;
 use App\Models\Player;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Pusher\PusherException;
 
 class PartyStagesController extends Controller
 {
@@ -105,6 +107,8 @@ class PartyStagesController extends Controller
     /**
      * @param Party $party
      * @return RedirectResponse
+     * @throws GuzzleException
+     * @throws PusherException
      */
     public function nextPartyStage(Party $party): RedirectResponse
     {
@@ -130,6 +134,8 @@ class PartyStagesController extends Controller
         $party->party_stage_id = $partyStage->id;
         $party->save();
 
+        event(new GamePartiesUpdateEvent($party->id));
+
         return redirect()->back();
     }
 
@@ -137,6 +143,8 @@ class PartyStagesController extends Controller
      * @param Request $request
      * @param PartyStage $partyStage
      * @return JsonResponse
+     * @throws GuzzleException
+     * @throws PusherException
      */
     public function savePlayerWinner(Request $request, PartyStage $partyStage): JsonResponse
     {
@@ -145,6 +153,8 @@ class PartyStagesController extends Controller
         if ($player) {
             $partyStage->player_winner()->associate($player);
             $partyStage->save();
+
+            event(new GamePartiesUpdateEvent($partyStage->party_id));
 
             return response()->json(['success' => true]);
         } else {

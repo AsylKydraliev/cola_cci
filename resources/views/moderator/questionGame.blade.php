@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="container-fluid">
+        <input type="hidden" id="party_id" value="{{ $partyStage->party_id }}">
+
         @if(session('points') || $partyStage->party->status === \App\Models\Party::STATUS_FINISHED)
             <h1 class="mb-4 text-center">Игра окончена</h1>
             <div class="game-leaders">
@@ -18,8 +20,10 @@
             @include('components.gameQuestion', ['partyStage' => $partyStage, 'player' => false])
 
             <div class="text-end">
-                <a class="btn btn-danger px-5 py-2 me-5"
-                   href="{{ route('next_party_stage', ['party_id' => $partyStage->party_id]) }}">
+                <a
+                    id="next"
+                    class="btn btn-danger px-5 py-2 me-5"
+                    href="{{ route('next_party_stage', ['party_id' => $partyStage->party_id]) }}">
                     Далее
                     <i class="bi bi-chevron-double-right"></i>
                 </a>
