@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/sass/app.scss',
                 'resources/js/admin/tabs.js',
+                'resources/js/app.js'
             ],
             refresh: true,
         }),
