@@ -120,6 +120,8 @@ class PartyStagesController extends Controller
 
         if ($party->status === Party::STATUS_PENDING) {
             $party->status = Party::STATUS_STARTED;
+
+            event(new GamePartiesUpdateEvent($party->id));
         }
 
         if (!$partyStage && $party->status === Party::STATUS_STARTED) {
@@ -127,6 +129,8 @@ class PartyStagesController extends Controller
             $party->save();
 
             $points = $this->getPoints($party);
+
+            event(new GamePartiesUpdateEvent($party->id));
 
             return redirect()->back()->with(['points' => $points]);
         }

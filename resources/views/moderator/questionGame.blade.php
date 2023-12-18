@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container-fluid">
-        <input type="hidden" id="party_id" value="{{ $partyStage->party_id }}">
 
         @if(session('points') || $partyStage->party->status === \App\Models\Party::STATUS_FINISHED)
             <h1 class="mb-4 text-center">Игра окончена</h1>

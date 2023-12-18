@@ -18,13 +18,14 @@
     <input value="{{ $partyStage->id }}" name="party_stage_id" type="hidden">
 @endif
 
-@if($partyStage->player_winner && $partyStage->type == \App\Models\PartyStage::TYPE_QUESTION && $player)
+@if($partyStage->player_winner && $partyStage->type == \App\Models\PartyStage::TYPE_QUESTION)
     <input value="1" name="modal" type="hidden">
     <input value="{{ $partyStage->player_winner->id }}" name="player_winner_id" type="hidden">
     <input value="{{ $partyStage->player_winner->name }}" name="player_winner_name" type="hidden">
 @endif
 
-<input type="hidden" id="party_id" value="{{ $partyStage->party_id }}">
+<input type="hidden" name="party_id" value="{{ $partyStage->party_id }}">
+<input type="hidden" name="is_player" value="{{ $player }}">
 
 <div class="d-flex flex-wrap gap-2 mx-5 game-content mt-4">
     <div class="position-relative">

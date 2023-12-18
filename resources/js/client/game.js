@@ -3,8 +3,17 @@ $(document).ready(function () {
     const partyStageId = $('[name="party_stage_id"]').val();
     const playerWinnerId = $('[name="player_winner_id"]').val();
     const playerWinnerName = $('[name="player_winner_name"]').val();
+    const isPlayer = $('[name="is_player"]').val();
 
-    if (playerWinnerId && playerWinnerId !== currentPlayerId) {
+    if (!isPlayer && playerWinnerId) {
+        Swal.fire({
+            title: 'Победитель найден!',
+            text: 'Игрок ' + playerWinnerName + ' нашел ответ',
+            icon: 'success',
+        });
+    }
+
+    if (isPlayer && playerWinnerId && playerWinnerId !== currentPlayerId) {
         Swal.fire({
             title: 'Победитель найден!',
             text: 'Игрок ' + playerWinnerName + ' нашел ответ',
@@ -79,12 +88,11 @@ $(document).ready(function () {
         setTimeout(updateTimer, 1000);
     });
 
-    const party_id = $('#party_id').val();
+    const party_id = $('[name="party_id"]').val();
 
-    console.log(party_id)
+    console.log(party_id);
     const channelGameParties = pusher.subscribe('gameParties.party.' + party_id);
     channelGameParties.bind('game-parties-update', function () {
-        console.log('websocket');
         location.reload();
     });
 });

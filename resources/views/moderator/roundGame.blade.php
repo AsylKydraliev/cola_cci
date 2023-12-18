@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container-fluid">
-        <input type="hidden" id="party_id" value="{{ $partyStage->party_id }}">
 
         @if(session('finish') || $partyStage->party->status === \App\Models\Party::STATUS_FINISHED)
             <div class="container alert alert-danger my-3">
@@ -26,5 +25,5 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/css/client/game.css'])
+    @vite(['resources/css/client/game.css', 'resources/js/client/game.js'])
 @endpush

@@ -1,4 +1,4 @@
-<input type="hidden" id="party_id" value="{{ $partyStage->party_id }}">
+<input type="hidden" name="party_id" value="{{ $partyStage->party_id }}">
 
 <div class="text-center mt-4 w-100 mx-auto">
     <div class="mx-5">
@@ -25,3 +25,8 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    @vite(['resources/js/client/game.js'])
+@endpush
+
