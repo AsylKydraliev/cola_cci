@@ -90,7 +90,6 @@ $(document).ready(function () {
 
     const party_id = $('[name="party_id"]').val();
 
-    console.log(party_id);
     const channelGameParties = pusher.subscribe('gameParties.party.' + party_id);
     channelGameParties.bind('game-parties-update', function () {
         location.reload();
