@@ -21,6 +21,9 @@
                         autofocus
                         required
                     />
+                    @error('game_code')
+                    <div class="text-danger mt-3">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="field position-relative">
                     <label for="name" class="field-label">Ваше имя</label>
@@ -34,7 +37,7 @@
                         required
                     />
                     @error('name')
-                    <small class="text-danger">{{ $message }}</small>
+                    <div class="text-danger mt-3">{{ $message }}</div>
                     @enderror
                 </div>
 

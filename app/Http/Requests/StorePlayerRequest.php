@@ -24,7 +24,7 @@ class StorePlayerRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2', 'max:255'],
-            'game_code' => ['nullable', 'numeric'],
+            'game_code' => ['nullable', 'numeric', Rule::exists('parties', 'game_code')],
         ];
     }
 
@@ -34,7 +34,9 @@ class StorePlayerRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'game_code' => 'Поле код игры обязательно'
+            'game_code' => 'Поле код игры обязательно',
+            'game_code.exists' => 'Игра не найдена',
+            'game_code.numeric' => 'Код игры должен быть числом',
         ];
     }
 }
