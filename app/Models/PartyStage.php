@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use App\Events\GamePartiesUpdateEvent;
-use App\Events\OrderDeliveryInYandexEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -16,6 +13,7 @@ use Illuminate\Support\Carbon;
  * @property int $party_id
  * @property int $type
  * @property string $title
+ * @property string $description
  * @property int|null $answer_id
  * @property int $points
  * @property Carbon $created_at

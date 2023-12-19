@@ -4,11 +4,12 @@ $(document).ready(function () {
     const playerWinnerId = $('[name="player_winner_id"]').val();
     const playerWinnerName = $('[name="player_winner_name"]').val();
     const isPlayer = $('[name="is_player"]').val();
+    const correctAnswer = $('[name="answer"]').val();
 
     if (!isPlayer && playerWinnerId) {
         Swal.fire({
             title: 'Победитель найден!',
-            text: 'Игрок ' + playerWinnerName + ' нашел ответ',
+            html: `Игрок <strong>${playerWinnerName}</strong> нашел ответ <br> Правильный ответ: <strong> ${correctAnswer} </strong>`,
             icon: 'success',
         });
     }
@@ -16,7 +17,7 @@ $(document).ready(function () {
     if (isPlayer && playerWinnerId && playerWinnerId !== currentPlayerId) {
         Swal.fire({
             title: 'Победитель найден!',
-            text: 'Игрок ' + playerWinnerName + ' нашел ответ',
+            html: `Игрок <strong>${playerWinnerName}</strong> нашел ответ <br> Правильный ответ: <strong> ${correctAnswer} </strong>`,
             icon: 'warning',
             showConfirmButton: false,
             showCancelButton: false,
@@ -27,7 +28,7 @@ $(document).ready(function () {
     if (playerWinnerId && playerWinnerId === currentPlayerId) {
         Swal.fire({
             title: 'Поздравляем',
-            text: 'Ваш ответ верен!',
+            text: 'Вы выбрали правильный вариант!',
             icon: 'success',
             showConfirmButton: false,
             showCancelButton: false,
@@ -90,25 +91,6 @@ $(document).ready(function () {
             $timerContainer.text(timerValue);
 
             if (timerValue <= 0) {
-                // if (answer === clickedAnswer) {
-                //     Swal.fire({
-                //         title: 'Поздравляем',
-                //         text: 'Ваш ответ верен!',
-                //         icon: 'success',
-                //         showConfirmButton: false,
-                //         showCancelButton: false,
-                //         allowOutsideClick: false
-                //     });
-                //
-                //     $.ajax({
-                //         type: 'POST',
-                //         headers: {'X-CSRF-TOKEN': csrf_token},
-                //         url: `/save_player_winner/${partyStageId}`,
-                //         data: {
-                //             player_id: currentPlayerId,
-                //         },
-                //     });
-                // }
                 $timerContainer.remove();
                 isTimerRunning = false;
             } else {

@@ -14,13 +14,14 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Pusher\PusherException;
 
 class PartyController extends Controller
 {
-
     /**
      * @param Game $game
      * @return RedirectResponse
@@ -60,6 +61,7 @@ class PartyController extends Controller
                 $partyStage->type = PartyStage::TYPE_QUESTION;
                 $partyStage->title = $question->question_title;
                 $partyStage->answer_id = $question->answer_id;
+                $partyStage->description = $question->description;
                 $partyStage->points = $question->points;
 
                 $party->stages()->save($partyStage);
@@ -120,5 +122,21 @@ class PartyController extends Controller
         $partyStages->load('answer', 'player_winner');
 
         return view('admin.partyStages.partyStages', compact('partyStages', 'points'));
+    }
+
+    /**
+     * @param Party $party
+     * @return JsonResponse|RedirectResponse
+     * @throws GuzzleException
+     * @throws PusherException
+     */
+    public function finishGame(Party $party): JsonResponse|RedirectResponse
+    {
+        $party->status = Party::STATUS_FINISHED;
+        $party->save();
+
+        event(new GamePartiesUpdateEvent($party->id));
+
+        return response()->json(['success' => 'Игра успешно завершена']);
     }
 }

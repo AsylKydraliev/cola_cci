@@ -25,12 +25,14 @@ class UpdateGameRequest extends FormRequest
             'game_title' => ['required', 'min:3', 'max:255'],
             'rounds_quantity' => ['required', 'numeric'],
             'rounds' => ['required', 'array'],
+            'round_descriptions' => ['required', 'array'],
             'questions' => ['required', 'array'],
             'points' => ['required', 'array'],
             'answer_ids' => ['required', 'array'],
 
             // правила для элементов внутри массивов
             'rounds.*' => ['required'],
+            'round_descriptions.*' => ['required'],
             'questions.*' => ['required'],
             'points.*' => ['required'],
             'answer_ids.*' => ['required'],

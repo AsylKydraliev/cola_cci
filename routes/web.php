@@ -27,6 +27,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::get('parties/{game}', [PartyController::class, 'getParties'])->name('parties');
     Route::post('store_party/{game}', [PartyController::class, 'store'])->name('store_party');
     Route::get('party_stages/{party}', [PartyController::class, 'showPartyStages'])->name('partyStages');
+    Route::post('finish_game/{party}', [PartyController::class, 'finishGame'])->name('finishGame');
 });
 
 Route::get('player_game/{player_uuid}', [PartyStagesController::class, 'partyStagesForPlayer'])->name('player_game');

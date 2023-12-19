@@ -14,6 +14,9 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
+// TODO добавить описание для раунда store, update и в таблицу party_stages и сохранять к раундам
+// TODO Если открыть с мобилки показать другую страницу что моб версия недоступна
+
 class GameController extends Controller
 {
     /**
@@ -148,8 +151,6 @@ class GameController extends Controller
         $questions = $validatedData['questions'];
         $points = $validatedData['points'];
         $answerIds = $validatedData['answer_ids'];
-
-        //TODO если количество раундов стало меньше чем было, нужно удалить остальные связанные раунды и вопросы
 
         $game->game_title = $validatedData['game_title'];
         $game->rounds_quantity = $validatedData['rounds_quantity'];

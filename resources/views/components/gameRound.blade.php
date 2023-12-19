@@ -6,8 +6,9 @@
             <img src="{{ asset('images/title-img.png') }}" alt="" width="100%" height="130">
             <div class="text-container">
                 <h1 class="pending-title">
-                    Ожидание начала игры
+                    Ожидание начала
                     <img src="{{ asset('images/clock.png') }}" alt="" width="50"/>
+                    {{ $partyStage->title }}
                 </h1>
             </div>
         </div>
@@ -19,9 +20,9 @@
         <img src="{{ asset('images/pending-img.png') }}" alt="" width="100%">
     </div>
     <div class="w-50 position-relative">
-        <div class="pending-content-label col-2">Задание</div>
+        <div class="pending-content-label col-2">Описание</div>
         <div class="pending-content-task">
-            {{ $partyStage->title }}
+            {{ $partyStage->description }}
         </div>
     </div>
 </div>

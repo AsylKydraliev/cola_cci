@@ -24,28 +24,30 @@
         </div>
         <hr>
         @forelse($parties as $key => $party)
-{{--            <div class="mt-4 py-2 text-center alert alert-{{ \App\Models\Party::getStatusColor()[$party->status] }}">--}}
-{{--                {{ \App\Models\Party::getStatus()[$party->status] }}--}}
-{{--            </div>--}}
-            {{--            <div class="d-flex justify-content-between mb-1">--}}
-            {{--                <div class="text-secondary">--}}
-            {{--                    Партия №{{ $key+1 }}--}}
-            {{--                    от {{ date('d.m.Y H:i', strtotime($party->created_at)) }}--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
-
             <div class="mb-3">
                 <div class="row">
                     <div class="col mb-3 mb-sm-0">
                         <div class="party-card">
                             <div class="card-body">
                                 <div class="d-flex gap-2 align-items-center justify-content-between">
+
+                                    <input type="hidden" name="_token">
+
                                     <h3 class="text-secondary m-0">
                                         Партия №{{ $key+1 }}
                                         от {{ date('d.m.Y H:i', strtotime($party->created_at)) }}
                                     </h3>
-                                    <div class="m-0 py-1 text-center alert alert-{{ \App\Models\Party::getStatusColor()[$party->status] }}">
-                                        {{ \App\Models\Party::getStatus()[$party->status] }}
+                                    <div class="d-flex gap-2">
+                                        @if($party->status === \App\Models\Party::STATUS_STARTED)
+                                            <button
+                                                class="btn btn-outline-danger finishGameConfirm"
+                                                data-party_id="{{ $party->id }}"
+                                            >Завершить игру</button>
+                                        @endif
+                                        <div
+                                            class="m-0 py-1 text-center alert alert-{{ \App\Models\Party::getStatusColor()[$party->status] }}">
+                                            {{ \App\Models\Party::getStatus()[$party->status] }}
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>

@@ -50,6 +50,12 @@ $(document).ready(function () {
                     .attr('required', true);
                 const roundLabel = $('<label>')
                     .text('Раунд № ' + i);
+                const roundInputDescription = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', `round_descriptions[${i}]`)
+                    .addClass('form-control mb-2')
+                    .attr('placeholder', 'Введите описание раунда')
+                    .attr('required', true);
                 const addInputButton = $('<button><i class="bi bi-plus-lg"></i>Добавить вопрос</button><br>')
                     .attr('type', 'button')
                     .addClass('btn btn-primary btn-sm mb-1 addQuestion');
@@ -88,8 +94,17 @@ $(document).ready(function () {
                     .attr('type', 'button')
                     .addClass('btn btn-danger btn-sm deleteBtn');
 
-                questionInputContainer.append(questionInput).append(answerInput).append(pointsInput).append(deleteInputButton);
-                roundContainer.append(roundLabel).append(roundInput).append(addInputButton).append(questionInputContainer);
+                questionInputContainer
+                    .append(questionInput)
+                    .append(answerInput)
+                    .append(pointsInput)
+                    .append(deleteInputButton);
+                roundContainer
+                    .append(roundLabel)
+                    .append(roundInput)
+                    .append(roundInputDescription)
+                    .append(addInputButton)
+                    .append(questionInputContainer);
 
                 $('#rounds-container')
                     .append(roundContainer);
@@ -111,6 +126,12 @@ $(document).ready(function () {
                     .attr('required', true);
                 const roundLabel = $('<label>')
                     .text('Раунд № ' + i);
+                const roundInputDescription = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', `round_descriptions[${i}]`)
+                    .addClass('form-control mb-2')
+                    .attr('placeholder', 'Введите описание раунда')
+                    .attr('required', true);
                 const addInputButton = $('<button><i class="bi bi-plus-lg"></i>Добавить вопрос</button><br>')
                     .attr('type', 'button')
                     .addClass('btn btn-primary btn-sm mb-1 addQuestion');
@@ -157,6 +178,7 @@ $(document).ready(function () {
                 roundContainer
                     .append(roundLabel)
                     .append(roundInput)
+                    .append(roundInputDescription)
                     .append(addInputButton)
                     .append(questionInputContainer);
 

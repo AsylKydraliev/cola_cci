@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property int $id
  * @property string $round_title
+ * @property string $description
  * @property int $game_id
  *
  * @property-read Game $game
@@ -25,6 +26,7 @@ class Round extends Model
     protected $fillable = [
         'id',
         'round_title',
+        'description',
         'game_id'
     ];
 

@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container-fluid">
-
         @if(session('points') || $partyStage->party->status === \App\Models\Party::STATUS_FINISHED)
             <h1 class="mb-4 text-center">Игра окончена</h1>
             <div class="game-leaders">
