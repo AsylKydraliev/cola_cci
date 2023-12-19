@@ -2,37 +2,45 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('player_game_code') }}" method="post">
-            @csrf
-            <div class="mb-3 col-lg-4 col-md-6 col-sm-12">
-                <label for="game_code">Код игры</label>
-                <input
-                    type="number"
-                    name="game_code"
-                    id="game_code"
-                    class="form-control @error('game_code') is-invalid @enderror"
-                    value="{{ old('game_code') }}"
-                />
-                @error('game_code')
+        <div class="register-form text-center mx-auto mt-5">
+            <form
+                action="{{ route('player_game_code') }}"
+                method="post"
+                class="form d-flex flex-column gap-5 mx-auto"
+            >
+                @csrf
+                <h1 class="fw-bold form-title">Регистрация</h1>
+                <div class="field position-relative">
+                    <label for="game_code" class="field-label">Код игры</label>
+                    <input
+                        type="text"
+                        name="game_code"
+                        id="game_code"
+                        class="field-input"
+                        value="{{ old('game_code') }}"
+                        autofocus
+                        required
+                    />
+                </div>
+                <div class="field position-relative">
+                    <label for="name" class="field-label">Ваше имя</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="field-input"
+                        value="{{ old('name') }}"
+                        autofocus
+                        required
+                    />
+                    @error('name')
                     <small class="text-danger">{{ $message }}</small>
-                @enderror
-            </div>
-            <div class="mb-3 col-lg-4 col-md-6 col-sm-12">
-                <label for="name">Ваше имя</label>
-                <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    class="form-control @error('name') is-invalid @enderror"
-                    value="{{ old('name') }}"
-                />
-                @error('name')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-            </div>
+                    @enderror
+                </div>
 
-            <button type="submit" class="btn btn-danger">Войти</button>
-        </form>
+                <button type="submit" class="mx-auto col-3 btn-submit">Войти</button>
+            </form>
+        </div>
     </div>
 @endsection
 

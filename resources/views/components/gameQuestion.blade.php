@@ -28,14 +28,19 @@
 <input type="hidden" name="is_player" value="{{ $player }}">
 
 <div class="d-flex flex-wrap gap-2 mx-5 game-content mt-4">
-    <div class="position-relative">
-        <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="1250px">
+    <div class="position-relative" style="width: 1250px">
+        <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="1250px" class="bubbles-bg">
         <span id="answer" data-answer="{{ $partyStage->answer->answer_title }}"></span>
 
         <div class="bubbles d-flex gap-4 flex-wrap align-items-start justify-content-center">
             @foreach (\App\Models\Answer::shuffleAnswers() as $answer)
                 <button class="bubble @if($player) bubble-player @endif">
-                    <img src="{{ asset('images/bubbles-big.png') }}" alt="" width="{{ $answer['answer_width'] }}"/>
+                    <img
+                        src="{{ asset('images/bubbles-big.png') }}"
+                        width="{{ $answer['answer_width'] }}"
+                        alt="{{ $answer['answer_title'] }}"
+                        class="{{ $answer['id'] }}"
+                    />
                     <span class="answer">{{ $answer['answer_title'] }}</span>
                 </button>
             @endforeach

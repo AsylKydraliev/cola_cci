@@ -78,18 +78,6 @@
     font-size: 1.8em;
 }
 
-@media screen and (max-width: 768px) {
-    .pending-title {
-        font-size: 1.2em;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .pending-title {
-        font-size: 1em;
-    }
-}
-
 .pending-content {
     margin-top: 5rem;
 }
@@ -121,15 +109,6 @@
     margin: 0 auto;
 }
 
-@media screen and (max-width: 1290px) {
-    .pending-content {
-        flex-direction: column !important;
-    }
-
-    img {
-        max-width: 100%;
-    }
-}
 
 .game-leaders-list {
     border-radius: 40px;
@@ -163,12 +142,6 @@
     color: white;
     display: flex;
     justify-content: space-between;
-}
-
-@media screen and (max-width: 1440px) {
-    .game-content {
-        flex-direction: column !important;
-    }
 }
 
 .bubbles {
@@ -269,5 +242,71 @@
     font-size: 16px;
     color: #543232;
     font-weight: bold;
+}
+
+@media screen and (max-width: 1670px) {
+    .bubbles {
+        max-width: 1100px;
+    }
+
+    .bubbles-bg {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .bubble > img {
+        width: calc(7vw);
+    }
+
+    .game-content {
+        display: flex;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .answer {
+        font-size: 13px;
+    }
+
+    .game-leaders-list {
+        width: 380px;
+    }
+
+    .list-item-info {
+        top: 0;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .bubbles {
+        max-width: 1000px;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .bubbles {
+        max-width: 910px;
+    }
+}
+
+@media screen and (max-width: 1290px) {
+    .pending-content {
+        flex-direction: column !important;
+    }
+    img {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .pending-title {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .pending-title {
+        font-size: 1em;
+    }
 }
 

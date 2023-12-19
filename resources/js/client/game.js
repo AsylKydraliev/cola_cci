@@ -41,6 +41,15 @@ $(document).ready(function () {
     $(".bubble-player").on("click", function () {
         // Проверить, не выполняется ли уже таймер
         if (isTimerRunning) {
+            Swal.fire({
+                title: 'Подождите',
+                text: 'Можно выбрать через 3 секунды',
+                icon: 'warning',
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false,
+                timer: 3000
+            });
             return;
         }
 
@@ -53,30 +62,53 @@ $(document).ready(function () {
         const clickedAnswer = $(this).find('.answer').text();
         const csrf_token = $('#player_id input[name="_token"]').val();
 
+        if (answer === clickedAnswer) {
+            Swal.fire({
+                title: 'Поздравляем',
+                text: 'Вы выбрали правильный вариант!',
+                icon: 'success',
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false
+            });
+
+            $.ajax({
+                type: 'POST',
+                headers: {'X-CSRF-TOKEN': csrf_token},
+                url: `/save_player_winner/${partyStageId}`,
+                data: {
+                    player_id: currentPlayerId,
+                },
+            });
+
+            $timerContainer.remove();
+            isTimerRunning = false;
+        }
+
         const updateTimer = () => {
             timerValue -= 1;
             $timerContainer.text(timerValue);
 
             if (timerValue <= 0) {
-                if (answer === clickedAnswer) {
-                    Swal.fire({
-                        title: 'Поздравляем',
-                        text: 'Ваш ответ верен!',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        showCancelButton: false,
-                        allowOutsideClick: false
-                    });
-
-                    $.ajax({
-                        type: 'POST',
-                        headers: {'X-CSRF-TOKEN': csrf_token},
-                        url: `/save_player_winner/${partyStageId}`,
-                        data: {
-                            player_id: currentPlayerId,
-                        },
-                    });
-                }
+                // if (answer === clickedAnswer) {
+                //     Swal.fire({
+                //         title: 'Поздравляем',
+                //         text: 'Ваш ответ верен!',
+                //         icon: 'success',
+                //         showConfirmButton: false,
+                //         showCancelButton: false,
+                //         allowOutsideClick: false
+                //     });
+                //
+                //     $.ajax({
+                //         type: 'POST',
+                //         headers: {'X-CSRF-TOKEN': csrf_token},
+                //         url: `/save_player_winner/${partyStageId}`,
+                //         data: {
+                //             player_id: currentPlayerId,
+                //         },
+                //     });
+                // }
                 $timerContainer.remove();
                 isTimerRunning = false;
             } else {
