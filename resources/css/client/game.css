@@ -84,7 +84,7 @@
 
 .pending-content-label {
     position: absolute;
-    top: -25%;
+    top: -10%;
     right: 50%;
     padding: 10px;
     border-radius: 40px;
@@ -107,8 +107,9 @@
     text-align: center;
     width: 600px;
     margin: 0 auto;
+    height: 320px;
+    overflow-y: auto;
 }
-
 
 .game-leaders-list {
     border-radius: 40px;
