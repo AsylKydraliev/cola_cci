@@ -14,8 +14,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-// TODO добавить описание для раунда store, update и в таблицу party_stages и сохранять к раундам
-
 class GameController extends Controller
 {
     /**
