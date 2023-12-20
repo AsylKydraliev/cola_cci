@@ -292,6 +292,24 @@
     }
 }
 
+@media screen and (max-width: 1400px) {
+    .client-content {
+        display: none;
+    }
+    .mobile-content {
+        display: block!important;
+    }
+}
+
+@media screen and (min-width: 1401px) {
+    .client-content {
+        display: block;
+    }
+    .mobile-content {
+        display: none!important;
+    }
+}
+
 @media screen and (max-width: 1290px) {
     .pending-content {
         flex-direction: column !important;
