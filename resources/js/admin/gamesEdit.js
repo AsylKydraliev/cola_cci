@@ -26,7 +26,6 @@ $(document).ready(function () {
             .attr('name', `questions[${roundIndex}]['0']`)
             .addClass('form-control form-control-sm col me-1')
             .attr('placeholder', 'Введите вопрос');
-
         const answerInput = $('<select>')
             .attr('name', `answer_ids[${roundIndex}]['0']`)
             .addClass('form-select form-select-sm col me-1')
@@ -90,18 +89,25 @@ $(document).ready(function () {
         //если количество раундов стало больше чем было, то добавляем новые
         if (previousRoundsQuantity !== 0 && previousRoundsQuantity < roundsQuantity) {
             for (let i = previousRoundsQuantity + 1; i <= previousRoundsQuantity + roundsDifference; i++) {
+
                 const roundContainer = $('<div>').addClass('round mb-3');
                 const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
 
                 // Round
                 const roundInput = $('<input>')
                     .attr('type', 'text')
-                    .attr('name', `rounds[${i}]`)
+                    .attr('name', `new_rounds[${i}]`)
                     .addClass('form-control mb-2')
                     .attr('placeholder', 'Введите название раунда')
                     .attr('required', true);
                 const roundLabel = $('<label>')
                     .text('Раунд № ' + i);
+                const roundInputDescription = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', `new_round_descriptions[${i}]`)
+                    .addClass('form-control mb-2')
+                    .attr('placeholder', 'Введите описание раунда')
+                    .attr('required', true);
                 const addInputButton = $('<button><i class="bi bi-plus-lg"></i>Добавить вопрос</button><br>')
                     .attr('type', 'button')
                     .addClass('btn btn-primary btn-sm mb-1 addQuestion');
@@ -144,12 +150,11 @@ $(document).ready(function () {
                 roundContainer
                     .append(roundLabel)
                     .append(roundInput)
+                    .append(roundInputDescription)
                     .append(addInputButton)
                     .append(questionInputContainer);
 
                 $('#rounds-container').append(roundContainer);
-
-                return;
             }
         }
     })

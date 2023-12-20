@@ -31,6 +31,17 @@
 <div class="d-flex flex-wrap gap-2 mx-5 game-content mt-4">
     <div class="position-relative" style="width: 1250px">
         <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="1250px" class="bubbles-bg">
+
+        <img src="{{ asset('images/bonaqua.png') }}" alt="" class="bonaqua-bg">
+        <img src="{{ asset('images/cola.png') }}" alt="" class="cola-bg">
+        <img src="{{ asset('images/fanta.png') }}" alt="" class="fanta-bg">
+        <img src="{{ asset('images/fuse.png') }}" alt="" class="fuse-bg">
+        <img src="{{ asset('images/piko.png') }}" alt="" class="piko-bg">
+        <img src="{{ asset('images/sprite.png') }}" alt="" class="sprite-bg">
+        <img src="{{ asset('images/schweppes.png') }}" alt="" class="schweppes-bg">
+        <img src="{{ asset('images/monster.png') }}" alt="" class="monster-bg">
+        <img src="{{ asset('images/zero.png') }}" alt="" class="zero-bg">
+
         <span id="answer" data-answer="{{ $partyStage->answer->answer_title }}"></span>
 
         <div class="bubbles d-flex gap-4 flex-wrap align-items-start justify-content-center">

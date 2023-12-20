@@ -52,6 +52,7 @@ class PartyController extends Controller
             $partyStage = new PartyStage();
             $partyStage->type = PartyStage::TYPE_ROUND;
             $partyStage->title = $round->round_title;
+            $partyStage->description = $round->description;
 
             $party->stages()->save($partyStage);
 
@@ -61,7 +62,6 @@ class PartyController extends Controller
                 $partyStage->type = PartyStage::TYPE_QUESTION;
                 $partyStage->title = $question->question_title;
                 $partyStage->answer_id = $question->answer_id;
-                $partyStage->description = $question->description;
                 $partyStage->points = $question->points;
 
                 $party->stages()->save($partyStage);

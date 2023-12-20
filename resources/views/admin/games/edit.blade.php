@@ -83,6 +83,22 @@
                                 @enderror
                             </div>
 
+                            <div class="mb-2">
+                                <label for="round_descriptions">Описание</label>
+                                <input
+                                    type="text"
+                                    id="round_descriptions"
+                                    class="form-control"
+                                    name="round_descriptions[{{ $round->id }}]"
+                                    placeholder="Введите описание раунда"
+                                    value="{{ old('rounds[]') ?? $round->description }}"
+                                    required
+                                />
+                                @error('round_descriptions')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
                             <button type="button" class="btn btn-primary btn-sm mb-2 addQuestion">
                                 <i class="bi bi-plus-lg"></i>
                                 Добавить вопрос

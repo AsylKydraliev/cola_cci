@@ -15,7 +15,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 // TODO добавить описание для раунда store, update и в таблицу party_stages и сохранять к раундам
-// TODO Если открыть с мобилки показать другую страницу что моб версия недоступна
 
 class GameController extends Controller
 {
@@ -50,6 +49,7 @@ class GameController extends Controller
     {
         $validatedData = $request->validated();
         $rounds = $validatedData['rounds'];
+        $round_descriptions = $validatedData['round_descriptions'];
         $questions = $validatedData['questions'];
         $points = $validatedData['points'];
         $answerIds = $validatedData['answer_ids'];
@@ -63,6 +63,7 @@ class GameController extends Controller
         foreach ($rounds as $roundIndex => $roundTitle) {
             $round = new Round();
             $round->round_title = $roundTitle;
+            $round->description = $round_descriptions[$roundIndex];
             $game->rounds()->save($round);
 
             // Создание вопроса
@@ -148,6 +149,9 @@ class GameController extends Controller
     {
         $validatedData = $request->validated();
         $rounds = $validatedData['rounds'];
+        $round_descriptions = $request['round_descriptions'];
+        $new_rounds = $request->get('new_rounds');
+        $new_round_descriptions = $request->get('new_round_descriptions');
         $questions = $validatedData['questions'];
         $points = $validatedData['points'];
         $answerIds = $validatedData['answer_ids'];
@@ -156,19 +160,40 @@ class GameController extends Controller
         $game->rounds_quantity = $validatedData['rounds_quantity'];
         $game->save();
 
-        // Обновление или создание раундов
+        // создание новых раундов
+        if (isset($new_rounds) && isset($round_descriptions)) {
+            foreach ($new_rounds as $roundIndex => $roundTitle) {
+                $round = new Round();
+                $round->round_title = $roundTitle;
+                $round->description = $new_round_descriptions[$roundIndex];
+                $game->rounds()->save($round);
+
+                foreach ($questions[$roundIndex] as $questionId => $questionTitle) {
+                    // Получение баллов для вопроса
+                    $point = $points[$roundIndex][$questionId];
+                    $answerId = $answerIds[$roundIndex][$questionId];
+
+                    $question = new Question();
+                    $question->question_title = $questionTitle;
+                    $question->points = $point;
+                    $question->answer_id = $answerId;
+
+                    $round->questions()->save($question);
+                }
+            }
+        }
+
+        // Обновление раундов
         foreach ($rounds as $roundId => $roundTitle) {
             $existingRound = Round::find($roundId);
 
             if ($existingRound) {
                 // Если запись существует, обновляем ее
-                $existingRound->update(['round_title' => $roundTitle]);
+                $existingRound->update([
+                    'round_title' => $roundTitle,
+                    'description' => $round_descriptions[$roundId]
+                ]);
                 $round = $existingRound;
-            } else {
-                // Если запись не существует, создаем новую
-                $round = new Round();
-                $round->round_title = $roundTitle;
-                $game->rounds()->save($round);
             }
 
             // Обновление или создание вопроса для каждого раунда
@@ -186,13 +211,6 @@ class GameController extends Controller
                         'answer_id' => $answerId,
                         'round_id' => $roundId,
                     ]);
-                } else {
-                    $question = new Question();
-                    $question->question_title = $questionTitle;
-                    $question->points = $point;
-                    $question->answer_id = $answerId;
-
-                    $round->questions()->save($question);
                 }
             }
         }

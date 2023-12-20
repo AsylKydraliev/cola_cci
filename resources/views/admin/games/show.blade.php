@@ -22,21 +22,33 @@
 
         <div id="rounds-container">
             @foreach($game->rounds as $keyRound => $round)
+                <h4>Раунд №{{ $keyRound +1 }}</h4>
                 <div class="mb-3 round">
-                    <div class="mb-2">
-                        <label for="rounds">Раунд №{{ $keyRound +1 }}</label>
-                        <input
-                            type="text"
-                            id="rounds"
-                            class="form-control"
-                            name="rounds[{{ $round->id }}]"
-                            value="{{ $round->round_title }}"
-                            disabled
-                            readonly
-                        />
-                        @error('rounds')
-                        <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="mb-2 d-flex gap-1">
+                        <div class="col">
+                            <label for="rounds">Название</label>
+                            <input
+                                type="text"
+                                id="rounds"
+                                class="form-control"
+                                name="rounds[{{ $round->id }}]"
+                                value="{{ $round->round_title }}"
+                                disabled
+                                readonly
+                            />
+                        </div>
+                        <div class="col">
+                            <label for="round_descriptions">Описание</label>
+                            <input
+                                type="text"
+                                id="round_descriptions"
+                                class="form-control"
+                                name="round_descriptions[{{ $round->id }}]"
+                                value="{{ $round->description }}"
+                                disabled
+                                readonly
+                            />
+                        </div>
                     </div>
 
                     @foreach($questions[$keyRound] as $keyQuestion => $question)
