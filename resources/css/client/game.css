@@ -111,6 +111,10 @@
     overflow-y: auto;
 }
 
+.pending-content-task::-webkit-scrollbar {
+    width: 16px;
+}
+
 .game-leaders-list {
     border-radius: 40px;
     border: 2px solid #D23735;
