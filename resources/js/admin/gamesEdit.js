@@ -158,7 +158,6 @@ $(document).ready(function () {
             }
 
             $('.addQuestion').click(function () {
-                console.log(123);
                 // Добавление вопроса
                 const roundContainer = $(this).closest('.round');
                 const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
