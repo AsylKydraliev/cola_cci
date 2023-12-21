@@ -72,7 +72,7 @@ class PartyStagesController extends Controller
      */
     public function partyStagesForModerator(Party $party): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        $partyStage = PartyStage::query()->find($party->party_stage_id);
+        $partyStage = PartyStage::query()->findOrFail($party->party_stage_id);
 
         $points = $this->getPoints($party);
         // Если тип Раунд, то возвращаем страницу ожидания игры
