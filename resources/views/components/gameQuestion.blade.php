@@ -41,6 +41,7 @@
         <img src="{{ asset('images/schweppes.png') }}" alt="" class="schweppes-bg">
         <img src="{{ asset('images/monster.png') }}" alt="" class="monster-bg">
         <img src="{{ asset('images/zero.png') }}" alt="" class="zero-bg">
+        <img src="{{ asset('images/predator.png') }}" alt="" class="predator-bg">
 
         <span id="answer" data-answer="{{ $partyStage->answer->answer_title }}"></span>
 

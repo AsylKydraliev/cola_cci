@@ -1,7 +1,7 @@
 @extends('layouts.client')
 
 @section('content')
-    <div class="container">
+    <div class="container client-content">
         <form
             action="{{ route('player_game_uuid', ['player_uuid' => Request::segment(count(Request::segments()))]) }}"
             method="post"
@@ -24,6 +24,12 @@
 
             <button type="submit" class="mx-auto col-3 btn-submit">Войти</button>
         </form>
+    </div>
+    <div class="mobile-content">
+        <div class="container text-center">
+            <img src="{{ asset('images/game-over.png') }}" alt="Game over" width="250">
+            <h1 class="mt-4">Извините, страница пока недоступна в мобильной версии</h1>
+        </div>
     </div>
 @endsection
 

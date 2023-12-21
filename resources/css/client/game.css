@@ -265,7 +265,7 @@
 
 .monster-bg {
     position: absolute;
-    bottom: 30%;
+    bottom: 35%;
     left: 5%;
     width: 105px;
 }
@@ -279,15 +279,15 @@
 
 .fuse-bg {
     position: absolute;
-    bottom: 50%;
-    right: 5%;
+    bottom: 45%;
+    right: 3%;
     width: 90px;
 }
 
 .piko-bg {
     position: absolute;
-    bottom: 15%;
-    right: 10%;
+    bottom: 10%;
+    right: 5%;
     width: 90px;
 }
 
@@ -310,6 +310,13 @@
     top: 10%;
     right: 5%;
     width: 90px;
+}
+
+.predator-bg {
+    position: absolute;
+    top: 18%;
+    right: 25%;
+    width: 80px;
 }
 
 @media screen and (max-width: 1670px) {

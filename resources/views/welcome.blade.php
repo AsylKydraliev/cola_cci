@@ -1,7 +1,7 @@
 @extends('layouts.client')
 
 @section('content')
-    <div class="container">
+    <div class="container client-content">
         <div class="register-form text-center mx-auto mt-5">
             <form
                 action="{{ route('player_game_code') }}"
@@ -43,6 +43,12 @@
 
                 <button type="submit" class="mx-auto col-3 btn-submit">Войти</button>
             </form>
+        </div>
+    </div>
+    <div class="mobile-content">
+        <div class="container text-center">
+            <img src="{{ asset('images/game-over.png') }}" alt="Game over" width="250">
+            <h1 class="mt-4">Извините, страница пока недоступна в мобильной версии</h1>
         </div>
     </div>
 @endsection

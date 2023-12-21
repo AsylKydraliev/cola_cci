@@ -91,7 +91,7 @@
                                     class="form-control"
                                     name="round_descriptions[{{ $round->id }}]"
                                     placeholder="Введите описание раунда"
-                                    value="{{ old('rounds[]') ?? $round->description }}"
+                                    value="{{ old('round_descriptions[]') ?? $round->description }}"
                                     required
                                 />
                                 @error('round_descriptions')
