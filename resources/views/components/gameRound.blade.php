@@ -22,7 +22,6 @@
     <div class="w-50 position-relative">
         <div class="pending-content-label col-2">Описание</div>
         <div class="pending-content-task">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid eligendi ex ipsam porro rerum? Aspernatur deleniti magni provident repellat? Consequatur.
             {{ $partyStage->description }}
         </div>
     </div>
