@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('party_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('type');
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('answer_id')->nullable();
             $table->foreign('answer_id')->references('id')->on('answers')->noActionOnDelete();
             $table->integer('points')->default(0);
