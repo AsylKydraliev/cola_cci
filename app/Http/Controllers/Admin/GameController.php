@@ -169,7 +169,7 @@ class GameController extends Controller
                 $round->round_title = $roundTitle;
                 $round->description = $new_round_descriptions[$roundIndex];
                 $game->rounds()->save($round);
-
+;
                 foreach ($new_questions[$roundIndex] as $questionId => $questionTitle) {
                     // Получение баллов для вопроса
                     $point = $new_points[$roundIndex][$questionId];

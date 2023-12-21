@@ -14,20 +14,22 @@ $(document).ready(function () {
         validatedStep1();
     });
 
+    let questionIndex = 0;
+
     $('.addQuestion').click(function () {
         // Добавление вопроса
         const roundContainer = $(this).closest('.round');
         const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
         const roundName = roundContainer.find('input[name^="rounds["]').attr('name');
-        const roundIndex = roundName.match(/\[(\d+)\]/)[1];
+        const roundId = roundName.match(/\[(\d+)\]/)[1];
 
         const questionInput = $('<input>')
             .attr('type', 'text')
-            .attr('name', `new_questions[${roundIndex}][]`)
+            .attr('name', `new_questions[${roundId}][${questionIndex}]`)
             .addClass('form-control form-control-sm col me-1')
             .attr('placeholder', 'Введите вопрос');
         const answerInput = $('<select>')
-            .attr('name', `new_answer_ids[${roundIndex}][]`)
+            .attr('name', `new_answer_ids[${roundId}][${questionIndex}]`)
             .addClass('form-select form-select-sm col me-1')
             .attr('placeholder', 'Выберите ответ');
         // Добавление пустого варианта
@@ -42,7 +44,7 @@ $(document).ready(function () {
 
         const pointsInput = $('<input>')
             .attr('type', 'number')
-            .attr('name', `new_points[${roundIndex}][]`)
+            .attr('name', `new_points[${roundId}][${questionIndex}]`)
             .addClass('form-control form-control-sm col me-1')
             .attr('placeholder', 'Количество баллов за ответ');
 
@@ -55,7 +57,10 @@ $(document).ready(function () {
             .append(answerInput)
             .append(pointsInput)
             .append(deleteInputButton);
+
         roundContainer.append(questionInputContainer);
+
+        questionIndex++;
     });
 
     // Удаление вопроса
@@ -86,10 +91,10 @@ $(document).ready(function () {
             return;
         }
 
+        let newQuestionIndex = 0;
         //если количество раундов стало больше чем было, то добавляем новые
         if (previousRoundsQuantity !== 0 && previousRoundsQuantity < roundsQuantity) {
             for (let i = previousRoundsQuantity + 1; i <= previousRoundsQuantity + roundsDifference; i++) {
-
                 const roundContainer = $('<div>').addClass('round mb-3');
                 const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
 
@@ -115,13 +120,13 @@ $(document).ready(function () {
                 // Question
                 const questionInput = $('<input>')
                     .attr('type', 'text')
-                    .attr('name', `questions[${i}]['0']`)
+                    .attr('name', `new_questions[${i}][${newQuestionIndex}]`)
                     .addClass('form-control form-control-sm col me-1')
                     .attr('placeholder', 'Введите вопрос')
                     .attr('required', true);
 
                 const answerInput = $('<select>')
-                    .attr('name', `answer_ids[${i}]['0']`)
+                    .attr('name', `new_answer_ids[${i}][${newQuestionIndex}]`)
                     .addClass('form-select form-select-sm col me-1')
                     .attr('placeholder', 'Выберите ответ')
                     .attr('required', true);
@@ -133,7 +138,7 @@ $(document).ready(function () {
 
                 const pointsInput = $('<input>')
                     .attr('type', 'number')
-                    .attr('name', `points[${i}]['0']`)
+                    .attr('name', `new_points[${i}][${newQuestionIndex}]`)
                     .addClass('form-control form-control-sm col me-1')
                     .attr('placeholder', 'Количество баллов за ответ')
                     .attr('required', true);
@@ -157,6 +162,7 @@ $(document).ready(function () {
                 $('#rounds-container').append(roundContainer);
             }
 
+            let additionalQuestionIndex = 1;
             $('.addQuestion').click(function () {
                 // Добавление вопроса
                 const roundContainer = $(this).closest('.round');
@@ -166,11 +172,11 @@ $(document).ready(function () {
 
                 const questionInput = $('<input>')
                     .attr('type', 'text')
-                    .attr('name', `new_questions[${roundIndex}]['0']`)
+                    .attr('name', `new_questions[${roundIndex}][${additionalQuestionIndex}]`)
                     .addClass('form-control form-control-sm col me-1')
                     .attr('placeholder', 'Введите вопрос');
                 const answerInput = $('<select>')
-                    .attr('name', `new_answer_ids[${roundIndex}]['0']`)
+                    .attr('name', `new_answer_ids[${roundIndex}][${additionalQuestionIndex}]`)
                     .addClass('form-select form-select-sm col me-1')
                     .attr('placeholder', 'Выберите ответ');
                 // Добавление пустого варианта
@@ -185,7 +191,7 @@ $(document).ready(function () {
 
                 const pointsInput = $('<input>')
                     .attr('type', 'number')
-                    .attr('name', `new_points[${roundIndex}]['0']`)
+                    .attr('name', `new_points[${roundIndex}][${additionalQuestionIndex}]`)
                     .addClass('form-control form-control-sm col me-1')
                     .attr('placeholder', 'Количество баллов за ответ');
 
@@ -198,7 +204,9 @@ $(document).ready(function () {
                     .append(answerInput)
                     .append(pointsInput)
                     .append(deleteInputButton);
+
                 roundContainer.append(questionInputContainer);
+                additionalQuestionIndex++;
             });
         }
     })
