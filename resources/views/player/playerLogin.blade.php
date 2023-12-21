@@ -28,7 +28,7 @@
     <div class="mobile-content">
         <div class="container text-center">
             <img src="{{ asset('images/game-over.png') }}" alt="Game over" width="250">
-            <h1 class="mt-4">Извините, страница пока недоступна в мобильной версии</h1>
+            <h1 class="mt-4">Извините, страница пока недоступна в этом разрешении экрана</h1>
         </div>
     </div>
 @endsection
