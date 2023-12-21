@@ -367,7 +367,7 @@
     }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1300px) {
     .client-content {
         display: none;
     }
@@ -376,7 +376,7 @@
     }
 }
 
-@media screen and (min-width: 1401px) {
+@media screen and (min-width: 1301px) {
     .client-content {
         display: block;
     }

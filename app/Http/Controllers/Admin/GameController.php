@@ -148,11 +148,15 @@ class GameController extends Controller
         $validatedData = $request->validated();
         $rounds = $validatedData['rounds'];
         $round_descriptions = $request['round_descriptions'];
-        $new_rounds = $request->get('new_rounds');
-        $new_round_descriptions = $request->get('new_round_descriptions');
         $questions = $validatedData['questions'];
         $points = $validatedData['points'];
         $answerIds = $validatedData['answer_ids'];
+
+        $new_rounds = $request->get('new_rounds');
+        $new_round_descriptions = $request->get('new_round_descriptions');
+        $new_questions = $request->get('new_questions');
+        $new_points = $request->get('new_points');
+        $new_answerIds = $request->get('new_answer_ids');
 
         $game->game_title = $validatedData['game_title'];
         $game->rounds_quantity = $validatedData['rounds_quantity'];
@@ -166,10 +170,10 @@ class GameController extends Controller
                 $round->description = $new_round_descriptions[$roundIndex];
                 $game->rounds()->save($round);
 
-                foreach ($questions[$roundIndex] as $questionId => $questionTitle) {
+                foreach ($new_questions[$roundIndex] as $questionId => $questionTitle) {
                     // Получение баллов для вопроса
-                    $point = $points[$roundIndex][$questionId];
-                    $answerId = $answerIds[$roundIndex][$questionId];
+                    $point = $new_points[$roundIndex][$questionId];
+                    $answerId = $new_answerIds[$roundIndex][$questionId];
 
                     $question = new Question();
                     $question->question_title = $questionTitle;
@@ -191,24 +195,51 @@ class GameController extends Controller
                     'round_title' => $roundTitle,
                     'description' => $round_descriptions[$roundId]
                 ]);
-                $round = $existingRound;
             }
 
-            // Обновление или создание вопроса для каждого раунда
-            foreach ($questions[$roundId] as $questionId => $questionTitle) {
-                // Получение баллов для вопроса
-                $point = $points[$roundId][$questionId];
-                $answerId = $answerIds[$roundId][$questionId];
+            if (isset($new_questions[$roundId])) {
+                foreach ($new_questions[$roundId] as $key => $questionTitle) {
+                    // Получение баллов для вопроса
+                    $point = $new_points[$roundId][$key];
+                    $answerId = $new_answerIds[$roundId][$key];
 
-                $question = Question::find($questionId);
+                    $question = new Question();
+                    $question->question_title = $questionTitle;
+                    $question->points = $point;
+                    $question->answer_id = $answerId;
 
-                if ($question) {
-                    $question->update([
-                        'question_title' => $questionTitle,
-                        'points' => $point,
-                        'answer_id' => $answerId,
-                        'round_id' => $roundId,
-                    ]);
+                    $existingRound->questions()->save($question);
+                }
+            } else {
+                // Обновление или создание вопроса для каждого раунда
+                foreach ($questions[$roundId] as $questionId => $questionTitle) {
+                    // Получаем массив идентификаторов вопросов из запроса
+                    $requestQuestionIds = array_keys($questions[$roundId]);
+
+                    // Получаем все вопросы, принадлежащие к текущему раунду
+                    $existingQuestions = Question::query()->where('round_id', '=', $roundId)->get();
+
+                    // Удаляем те, которых нет в запросе
+                    foreach ($existingQuestions as $existingQuestion) {
+                        if (!in_array($existingQuestion->id, $requestQuestionIds)) {
+                            $existingQuestion->delete();
+                        }
+                    }
+
+                    // Получение баллов для вопроса
+                    $point = $points[$roundId][$questionId];
+                    $answerId = $answerIds[$roundId][$questionId];
+
+                    $question = Question::find($questionId);
+
+                    if ($question) {
+                        $question->update([
+                            'question_title' => $questionTitle,
+                            'points' => $point,
+                            'answer_id' => $answerId,
+                            'round_id' => $roundId,
+                        ]);
+                    }
                 }
             }
         }

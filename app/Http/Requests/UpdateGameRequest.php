@@ -33,7 +33,7 @@ class UpdateGameRequest extends FormRequest
             // правила для элементов внутри массивов
             'rounds.*' => ['required'],
             'round_descriptions.*' => ['required'],
-            'questions.*' => ['required'],
+            'questions.*' => ['required', 'max:255'],
             'points.*' => ['required'],
             'answer_ids.*' => ['required'],
         ];

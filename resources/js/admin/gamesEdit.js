@@ -23,11 +23,11 @@ $(document).ready(function () {
 
         const questionInput = $('<input>')
             .attr('type', 'text')
-            .attr('name', `questions[${roundIndex}]['0']`)
+            .attr('name', `new_questions[${roundIndex}][]`)
             .addClass('form-control form-control-sm col me-1')
             .attr('placeholder', 'Введите вопрос');
         const answerInput = $('<select>')
-            .attr('name', `answer_ids[${roundIndex}]['0']`)
+            .attr('name', `new_answer_ids[${roundIndex}][]`)
             .addClass('form-select form-select-sm col me-1')
             .attr('placeholder', 'Выберите ответ');
         // Добавление пустого варианта
@@ -42,7 +42,7 @@ $(document).ready(function () {
 
         const pointsInput = $('<input>')
             .attr('type', 'number')
-            .attr('name', `points[${roundIndex}]['0']`)
+            .attr('name', `new_points[${roundIndex}][]`)
             .addClass('form-control form-control-sm col me-1')
             .attr('placeholder', 'Количество баллов за ответ');
 
@@ -156,6 +156,51 @@ $(document).ready(function () {
 
                 $('#rounds-container').append(roundContainer);
             }
+
+            $('.addQuestion').click(function () {
+                console.log(123);
+                // Добавление вопроса
+                const roundContainer = $(this).closest('.round');
+                const questionInputContainer = $('<div>').addClass('question mb-1 mt-2 d-flex align-items-center');
+                const roundName = roundContainer.find('input[name^="new_rounds["]').attr('name');
+                const roundIndex = roundName.match(/\[(\d+)\]/)[1];
+
+                const questionInput = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', `new_questions[${roundIndex}]['0']`)
+                    .addClass('form-control form-control-sm col me-1')
+                    .attr('placeholder', 'Введите вопрос');
+                const answerInput = $('<select>')
+                    .attr('name', `new_answer_ids[${roundIndex}]['0']`)
+                    .addClass('form-select form-select-sm col me-1')
+                    .attr('placeholder', 'Выберите ответ');
+                // Добавление пустого варианта
+                answerInput.append($('<option>')
+                    .attr('disabled', true)
+                    .attr('selected', true)
+                    .attr('value', '')
+                    .text('Выберите ответ'));
+                answers.forEach(function (answer) {
+                    answerInput.append($('<option>').attr('value', answer.id).text(answer.answer_title));
+                });
+
+                const pointsInput = $('<input>')
+                    .attr('type', 'number')
+                    .attr('name', `new_points[${roundIndex}]['0']`)
+                    .addClass('form-control form-control-sm col me-1')
+                    .attr('placeholder', 'Количество баллов за ответ');
+
+                const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
+                    .attr('type', 'button')
+                    .addClass('btn btn-danger btn-sm deleteBtn');
+
+                questionInputContainer
+                    .append(questionInput)
+                    .append(answerInput)
+                    .append(pointsInput)
+                    .append(deleteInputButton);
+                roundContainer.append(questionInputContainer);
+            });
         }
     })
 });

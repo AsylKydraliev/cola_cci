@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('answer_id')->nullable();
-            $table->foreign('answer_id')->references('id')->on('answers')->noActionOnDelete();
+            $table->foreign('answer_id')->references('id')->on('answers')->cascadeOnDelete();
             $table->integer('points')->default(0);
             $table->unsignedBigInteger('player_winner_id')->nullable();
             $table->foreign('player_winner_id')
