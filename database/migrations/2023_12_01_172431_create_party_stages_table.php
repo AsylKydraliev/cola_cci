@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('party_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('type');
-            $table->string('title');
+            $table->text('title');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('answer_id')->nullable();
             $table->foreign('answer_id')->references('id')->on('answers')->cascadeOnDelete();
