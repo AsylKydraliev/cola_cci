@@ -20,7 +20,7 @@
 <body class="antialiased">
 <div>
     <main class="py-4">
-        <div class="text-center pt-5">
+        <div class="text-center">
             @yield('content')
         </div>
     </main>

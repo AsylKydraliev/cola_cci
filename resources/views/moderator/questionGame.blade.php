@@ -1,4 +1,4 @@
-@extends('layouts.gameFinish')
+@extends('layouts.client')
 
 @section('content')
     <div class="client-content">
@@ -18,7 +18,7 @@
             @else
                 @include('components.gameQuestion', ['partyStage' => $partyStage, 'player' => false])
 
-                <div class="text-end">
+                <div class="text-end mt-3">
                     <a
                         id="next"
                         class="btn btn-danger px-5 py-2 me-5"

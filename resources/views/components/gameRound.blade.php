@@ -1,6 +1,6 @@
 <input type="hidden" name="party_id" value="{{ $partyStage->party_id }}">
 
-<div class="text-center mt-4 w-100 mx-auto">
+<div class="text-center w-100 mx-auto">
     <div class="mx-5">
         <div class="position-relative">
             <img src="{{ asset('images/title-img.png') }}" alt="" width="100%" height="130">

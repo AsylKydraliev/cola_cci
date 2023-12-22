@@ -10,7 +10,7 @@
             @else
                 @include('components.gameRound', ['partyStage' => $partyStage])
 
-                <div class="text-end">
+                <div class="text-end mt-3">
                     <a
                         id="next"
                         class="btn btn-danger px-5 py-2 me-5"

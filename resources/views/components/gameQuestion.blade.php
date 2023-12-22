@@ -1,7 +1,7 @@
-<div class="text-center mt-4 w-100 mx-auto">
+<div class="text-center w-100 mx-auto">
     <div class="mx-5">
         <div class="position-relative">
-            <img src="{{ asset('images/title-img.png') }}" alt="" width="100%" height="130">
+            <img src="{{ asset('images/title-img.png') }}" alt="" width="100%" height="170">
             <div class="text-container">
                 <h1 class="pending-title">{{ $partyStage->title }}</h1>
             </div>
@@ -32,17 +32,6 @@
     <div class="position-relative" style="width: 1250px">
         <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="1250px" class="bubbles-bg">
 
-        <img src="{{ asset('images/bonaqua.png') }}" alt="" class="bonaqua-bg">
-        <img src="{{ asset('images/cola.png') }}" alt="" class="cola-bg">
-        <img src="{{ asset('images/fanta.png') }}" alt="" class="fanta-bg">
-        <img src="{{ asset('images/fuse.png') }}" alt="" class="fuse-bg">
-        <img src="{{ asset('images/piko.png') }}" alt="" class="piko-bg">
-        <img src="{{ asset('images/sprite.png') }}" alt="" class="sprite-bg">
-        <img src="{{ asset('images/schweppes.png') }}" alt="" class="schweppes-bg">
-        <img src="{{ asset('images/monster.png') }}" alt="" class="monster-bg">
-        <img src="{{ asset('images/zero.png') }}" alt="" class="zero-bg">
-        <img src="{{ asset('images/predator.png') }}" alt="" class="predator-bg">
-
         <span id="answer" data-answer="{{ $partyStage->answer->answer_title }}"></span>
 
         <div class="bubbles d-flex gap-4 flex-wrap align-items-start justify-content-center">
@@ -63,7 +52,7 @@
         <div class="game-leaders-list">
             <div class="game-leaders-label mb-4">Лидеры турнира</div>
             @if(isset($points))
-                <div class="px-3 d-flex flex-column gap-3">
+                <div class="px-3 d-flex flex-column gap-3 players-list">
                     @include('components.gameLeadersList', ['points' => $points])
                 </div>
             @endif

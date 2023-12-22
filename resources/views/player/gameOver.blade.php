@@ -1,7 +1,7 @@
 @extends('layouts.gameFinish')
 
 @section('content')
-    <h1 class="mb-4">Игра окончена</h1>
+    <h1 class="mb-4 mt-4">Игра окончена</h1>
     <div class="game-leaders">
         <div class="game-leaders-list">
             <div class="game-leaders-label mb-4">Лидеры турнира</div>
