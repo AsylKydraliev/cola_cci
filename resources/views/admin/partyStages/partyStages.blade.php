@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between gap-3 flex-wrap">
-            <div class="flex-grow-1">
+            <div class="round-items">
                 @foreach($partyStages as $partyStage)
                     <div
                         class="py-2 alert alert-{{ $partyStage->type == \App\Models\PartyStage::TYPE_ROUND ? 'dark mt-3' : 'light'}} mb-1">
@@ -13,6 +13,8 @@
                             </span>
                             {{ $partyStage->title }}
                         </div>
+                            <span class="text-secondary">Описание раунда:</span>
+                            {{ $partyStage->description }}
                         @if($partyStage->type == \App\Models\PartyStage::TYPE_QUESTION)
                             <div><span class="text-secondary">Баллы:</span> {{ $partyStage->points }}</div>
                             <div><span class="text-secondary">Ответ:</span> {{ $partyStage->answer->answer_title }}

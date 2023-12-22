@@ -279,6 +279,10 @@
     font-weight: bold;
 }
 
+.round-items {
+    width: 60%;
+}
+
 @media screen and (max-width: 1670px) {
     .bubbles {
         max-width: 1100px;
