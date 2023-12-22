@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('question_title');
             $table->foreignId('round_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('answer_id')->constrained()->noActionOnDelete();
-            $table->integer('points');
+            $table->integer('points')->default(0);
             $table->timestamps();
         });
     }
