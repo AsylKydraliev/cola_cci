@@ -22,6 +22,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    public const LIMIT_ON_NUMBER_OF_QUESTIONS_PER_ROUND = 10;
+
     protected $fillable = [
       'question_title',
       'answer_id',

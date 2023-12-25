@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\GamePartiesUpdateEvent;
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Game;
 use App\Models\Party;
 use App\Models\PartyStage;
@@ -53,6 +54,30 @@ class PartyController extends Controller
             $partyStage->type = PartyStage::TYPE_ROUND;
             $partyStage->title = $round->round_title;
             $partyStage->description = $round->description;
+
+            $questionAnswers = Question::query()
+                ->where('round_id', '=', $round->id)
+                ->pluck('answer_id')
+                ->toArray();
+            $limitForRandomAnswers = Question::LIMIT_ON_NUMBER_OF_QUESTIONS_PER_ROUND - count($questionAnswers);
+            $randomAnswers = Answer::query()
+                ->inRandomOrder()
+                ->limit($limitForRandomAnswers)
+                ->pluck('id')
+                ->toArray();
+
+            $roundAnswerIds = array_merge($questionAnswers, $randomAnswers);
+
+            $roundAnswers = Answer::query()
+                ->select('answers.id', 'round_answers.answer_title', 'answers.answer_width')
+                ->leftJoinSub(function ($query) use ($roundAnswerIds) {
+                    $query->select('id', 'answer_title')
+                        ->from('answers')
+                        ->whereIn('id', $roundAnswerIds);
+                }, 'round_answers', 'answers.id', '=', 'round_answers.id')
+                ->inRandomOrder()
+                ->limit(Answer::LIMIT_OF_QUESTIONS_IN_GAME)
+                ->get();
 
             $party->stages()->save($partyStage);
 
