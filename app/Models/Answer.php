@@ -21,6 +21,8 @@ class Answer extends Model
 {
     use HasFactory;
 
+    public const LIMIT_OF_QUESTIONS_IN_GAME = 18;
+
     protected $fillable = [
         'id',
         'answer_title',
