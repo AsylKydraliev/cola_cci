@@ -48,6 +48,7 @@
                         placeholder="Выберите количество раундов"
                         value="{{ old('rounds_quantity') ?? $game->rounds_quantity  }}"
                         required
+                        maxlength="10"
                     />
                 </div>
 

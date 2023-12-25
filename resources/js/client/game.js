@@ -88,8 +88,6 @@ $(document).ready(function () {
         setTimeout(updateTimer, 1000);
     });
 
-
-
     const party_id = $('[name="party_id"]').val();
 
     const channelGameParties = pusher.subscribe('gameParties.party.' + party_id);

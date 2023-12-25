@@ -1,10 +1,18 @@
 $(document).ready(function () {
+    // TODO добавить проверку на количество раундов макс 10
     let isStep1Valid = false;
     const answers = $('#answers').data('answers');
 
     // Выключение кнопки next-step, если поля game_title и rounds_quantity не заполнены
     function validatedStep1() {
-        isStep1Valid = $('#game_title').val().trim() !== '' && $('#rounds_quantity').val().trim() !== '';
+        const gameTitleValue = $('#game_title').val().trim();
+        const roundsQuantityValue = $('#rounds_quantity').val().trim();
+
+        // Проверка, что rounds_quantity не превышает 10
+        const isValidRoundsQuantity = roundsQuantityValue === '' || (parseInt(roundsQuantityValue) <= 10);
+
+        isStep1Valid = gameTitleValue !== '' && isValidRoundsQuantity;
+
         $('#next-step').prop('disabled', !isStep1Valid);
     }
 
@@ -15,9 +23,7 @@ $(document).ready(function () {
     });
 
     $('#next-step').click(function () {
-        // Количество раундов
         const roundsQuantity = $('#rounds_quantity').val();
-
         // Получаем предыдущее количество раундов
         const previousRoundsQuantity = $('#rounds-container .round').length;
 

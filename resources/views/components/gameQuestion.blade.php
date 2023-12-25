@@ -1,3 +1,6 @@
+<input type="hidden" name="party_id" value="{{ $partyStage->party_id }}">
+<input type="hidden" name="is_player" value="{{ $player }}">
+
 @if($partyStage->type == \App\Models\PartyStage::TYPE_QUESTION_DESCRIPTION)
     <div class="text-center w-100 mx-auto">
         <div class="mx-5">
@@ -52,15 +55,12 @@
         <input value="{{ $partyStage->answer->answer_title }}" name="answer" type="hidden">
     @endif
 
-    <input type="hidden" name="party_id" value="{{ $partyStage->party_id }}">
-    <input type="hidden" name="is_player" value="{{ $player }}">
-
     <div class="d-flex flex-wrap gap-2 mx-5 game-content mt-4">
         <div class="position-relative" style="width: 1250px">
             <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="1250px" class="bubbles-bg">
 
             <div class="bubbles d-flex gap-4 flex-wrap align-items-start justify-content-center">
-                @foreach (\App\Models\Answer::shuffleAnswers() as $answer)
+                @foreach ($partyStage->round_answers as $answer)
                     <button class="bubble @if($player) bubble-player @endif">
                         <img
                             src="{{ asset('images/bubbles-big.png') }}"

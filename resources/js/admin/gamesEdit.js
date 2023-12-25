@@ -4,7 +4,14 @@ $(document).ready(function () {
 
     // Выключение кнопки next-step, если поля game_title и rounds_quantity не заполнены
     function validatedStep1() {
-        isStep1Valid = $('#game_title').val().trim() !== '' && $('#rounds_quantity').val().trim() !== '';
+        const gameTitleValue = $('#game_title').val().trim();
+        const roundsQuantityValue = $('#rounds_quantity').val().trim();
+
+        // Проверка, что rounds_quantity не превышает 10
+        const isValidRoundsQuantity = roundsQuantityValue === '' || (parseInt(roundsQuantityValue) <= 10);
+
+        isStep1Valid = gameTitleValue !== '' && isValidRoundsQuantity;
+
         $('#next-step').prop('disabled', !isStep1Valid);
     }
 

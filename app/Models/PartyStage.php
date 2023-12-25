@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
  * @property int $type
  * @property string $title
  * @property string $description
+ * @property string|null $round_answers
  * @property int|null $answer_id
  * @property int $points
  * @property Carbon $created_at
@@ -33,6 +34,10 @@ class PartyStage extends Model
     public const TYPE_QUESTION_DESCRIPTION = 3;
 
     protected $fillable = ['player_winner_id'];
+
+    protected $casts = [
+        'round_answers' => 'json',
+    ];
 
     /**
      * @return string[]

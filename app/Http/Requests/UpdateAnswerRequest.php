@@ -23,7 +23,7 @@ class UpdateAnswerRequest extends FormRequest
     {
         return [
             'game_title' => ['required', 'min:3', 'max:255'],
-            'rounds_quantity' => ['required', 'numeric'],
+            'rounds_quantity' => ['required', 'numeric', 'max:10'],
             'rounds' => ['required', 'array'],
             'questions' => ['required', 'array'],
             'points' => ['required', 'array'],

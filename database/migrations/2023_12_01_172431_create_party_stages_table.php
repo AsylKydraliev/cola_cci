@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('type');
             $table->text('title');
             $table->text('description')->nullable();
+            $table->string('round_answers')->nullable();
             $table->unsignedBigInteger('answer_id')->nullable();
             $table->foreign('answer_id')->references('id')->on('answers')->cascadeOnDelete();
             $table->integer('points')->default(0);

@@ -61,6 +61,7 @@ class PartyController extends Controller
                 ->toArray();
             $limitForRandomAnswers = Question::LIMIT_ON_NUMBER_OF_QUESTIONS_PER_ROUND - count($questionAnswers);
             $randomAnswers = Answer::query()
+                ->whereNotIn('id', $questionAnswers)
                 ->inRandomOrder()
                 ->limit($limitForRandomAnswers)
                 ->pluck('id')
@@ -94,6 +95,7 @@ class PartyController extends Controller
                 $partyStage->title = $question->question_title;
                 $partyStage->answer_id = $question->answer_id;
                 $partyStage->points = $question->points;
+                $partyStage->round_answers = $roundAnswers;
 
                 $party->stages()->save($partyStage);
             }
