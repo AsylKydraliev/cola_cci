@@ -30,6 +30,7 @@ class PartyStage extends Model
 
     public const TYPE_ROUND = 1;
     public const TYPE_QUESTION = 2;
+    public const TYPE_QUESTION_DESCRIPTION = 3;
 
     protected $fillable = ['player_winner_id'];
 
@@ -41,6 +42,7 @@ class PartyStage extends Model
         return [
             self::TYPE_ROUND => 'Раунд',
             self::TYPE_QUESTION => 'Вопрос',
+            self::TYPE_QUESTION_DESCRIPTION => 'Описание',
         ];
     }
 

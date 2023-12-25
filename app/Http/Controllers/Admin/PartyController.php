@@ -59,6 +59,12 @@ class PartyController extends Controller
             /** @var Question $question */
             foreach ($round->questions as $question) {
                 $partyStage = new PartyStage();
+                $partyStage->type = PartyStage::TYPE_QUESTION_DESCRIPTION;
+                $partyStage->title = $question->question_title;
+
+                $party->stages()->save($partyStage);
+
+                $partyStage = new PartyStage();
                 $partyStage->type = PartyStage::TYPE_QUESTION;
                 $partyStage->title = $question->question_title;
                 $partyStage->answer_id = $question->answer_id;

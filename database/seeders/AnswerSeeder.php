@@ -85,10 +85,6 @@ class AnswerSeeder extends Seeder
             [
                 'answer_title' => 'Думать о завтрашнем дне',
                 'answer_width' => '130',
-            ],
-            [
-                'answer_title' => 'Быть лидером',
-                'answer_width' => '130',
             ]
         ];
 

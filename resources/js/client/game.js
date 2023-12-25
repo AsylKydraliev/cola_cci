@@ -36,10 +36,13 @@ $(document).ready(function () {
         });
     }
 
-    const answer = $('#answer').data('answer');
+    // const answer = $('#answer').data('answer');
 
     let isTimerRunning = false;
     $(".bubble-player").on("click", function () {
+        const clickedAnswer = $(this).find('.answer_id').val();
+        const csrf_token = $('#player_id input[name="_token"]').val();
+
         // Проверить, не выполняется ли уже таймер
         if (isTimerRunning) {
             Swal.fire({
@@ -57,41 +60,24 @@ $(document).ready(function () {
         const clickedBubble = $(this);
         let timerValue = 3;
 
-        const $timerContainer = $('<div class="timer">3</div>');
-        clickedBubble.append($timerContainer);
-
-        const clickedAnswer = $(this).find('.answer').text();
-        const csrf_token = $('#player_id input[name="_token"]').val();
-
-        if (answer === clickedAnswer) {
-            Swal.fire({
-                title: 'Поздравляем',
-                text: 'Вы выбрали правильный вариант!',
-                icon: 'success',
-                showConfirmButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false
-            });
-
-            $.ajax({
-                type: 'POST',
-                headers: {'X-CSRF-TOKEN': csrf_token},
-                url: `/save_player_winner/${partyStageId}`,
-                data: {
-                    player_id: currentPlayerId,
-                },
-            });
-
-            $timerContainer.remove();
-            isTimerRunning = false;
-        }
+        const timerContainer = $('<div class="timer">3</div>');
+        clickedBubble.append(timerContainer);
 
         const updateTimer = () => {
             timerValue -= 1;
-            $timerContainer.text(timerValue);
+            timerContainer.text(timerValue);
 
             if (timerValue <= 0) {
-                $timerContainer.remove();
+                $.ajax({
+                    type: 'POST',
+                    headers: {'X-CSRF-TOKEN': csrf_token},
+                    url: `/save_player_winner/${partyStageId}`,
+                    data: {
+                        clickedAnswer
+                    }
+                });
+
+                timerContainer.remove();
                 isTimerRunning = false;
             } else {
                 setTimeout(updateTimer, 1000);
@@ -101,6 +87,8 @@ $(document).ready(function () {
         isTimerRunning = true;
         setTimeout(updateTimer, 1000);
     });
+
+
 
     const party_id = $('[name="party_id"]').val();
 

@@ -152,17 +152,24 @@ class PartyStagesController extends Controller
      */
     public function savePlayerWinner(Request $request, PartyStage $partyStage): JsonResponse
     {
-        $player = Player::find($request->get('player_id'));
+        $clickedAnswerId = intval($request->get('clickedAnswer'));
+        $session_id = session()->getId();
 
-        if ($player) {
-            $partyStage->player_winner()->associate($player);
+        $player = Player::query()->where('session_id', '=', $session_id)->firstOrFail();
+
+        if ($partyStage->player_winner) {
+            return response()->json(['success' => false, 'message' => 'Player winner already exists']);
+        }
+
+        if ($clickedAnswerId == $partyStage->answer_id) {
+            $partyStage->player_winner()->associate($player->id);
             $partyStage->save();
 
             event(new GamePartiesUpdateEvent($partyStage->party_id));
 
             return response()->json(['success' => true]);
         } else {
-            return response()->json(['success' => false, 'message' => 'Игрок не найден'], 404);
+            return response()->json(['success' => false, 'message' => 'Incorrect answer']);
         }
     }
 }

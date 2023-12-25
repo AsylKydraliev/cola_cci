@@ -5,28 +5,30 @@
         <div class="d-flex justify-content-between gap-3 flex-wrap">
             <div class="round-items">
                 @foreach($partyStages as $partyStage)
-                    <div
-                        class="py-2 alert alert-{{ $partyStage->type == \App\Models\PartyStage::TYPE_ROUND ? 'dark mt-3' : 'light'}} mb-1">
-                        <div>
+                    @if($partyStage->type != \App\Models\PartyStage::TYPE_QUESTION_DESCRIPTION)
+                        <div
+                            class="py-2 alert alert-{{ $partyStage->type == \App\Models\PartyStage::TYPE_ROUND ? 'dark mt-3' : 'light'}} mb-1">
+                            <div>
                             <span class="text-secondary">
                                 {{ \App\Models\PartyStage::getPartyStageType()[$partyStage->type] }}:
                             </span>
-                            {{ $partyStage->title }}
-                        </div>
+                                {{ $partyStage->title }}
+                            </div>
                             <span class="text-secondary">Описание раунда:</span>
                             {{ $partyStage->description }}
-                        @if($partyStage->type == \App\Models\PartyStage::TYPE_QUESTION)
-                            <div><span class="text-secondary">Баллы:</span> {{ $partyStage->points }}</div>
-                            <div><span class="text-secondary">Ответ:</span> {{ $partyStage->answer->answer_title }}
-                            </div>
-                            @if($partyStage->player_winner)
-                                <div>
-                                    <span class="text-secondary">Победитель:</span>
-                                    {{ $partyStage->player_winner->name }}
+                            @if($partyStage->type == \App\Models\PartyStage::TYPE_QUESTION)
+                                <div><span class="text-secondary">Баллы:</span> {{ $partyStage->points }}</div>
+                                <div><span class="text-secondary">Ответ:</span> {{ $partyStage->answer->answer_title }}
                                 </div>
+                                @if($partyStage->player_winner)
+                                    <div>
+                                        <span class="text-secondary">Победитель:</span>
+                                        {{ $partyStage->player_winner->name }}
+                                    </div>
+                                @endif
                             @endif
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 @endforeach
             </div>
             <div class="mt-3">
