@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/css/client/game.css',
                 'resources/js/admin/gamesCreate.js',
                 'resources/js/admin/gamesEdit.js',
+                'resources/js/admin/gamesDelete.js',
                 'resources/js/admin/parties.js',
                 'resources/css/client/game.css',
                 'resources/js/client/game.js'
