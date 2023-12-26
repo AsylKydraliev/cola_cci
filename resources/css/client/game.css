@@ -201,10 +201,14 @@
     border: none;
     font: inherit;
     color: inherit;
-    background-color: transparent;
     cursor: pointer;
+    background-color: inherit;
     position: relative;
     transition: 0.2s;
+}
+
+.bubbles-bg-color {
+    background-color: #fed8d4;
 }
 
 .answer {
@@ -212,7 +216,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: black;
     font-size: 16px;
     font-weight: bold;
 }

@@ -61,7 +61,9 @@
 
             <div class="bubbles d-flex gap-4 flex-wrap align-items-start justify-content-center">
                 @foreach ($partyStage->round_answers as $answer)
-                    <button class="bubble @if($player) bubble-player @endif">
+                    <button
+                        class="bubble @if($player) bubble-player @endif @if(isset($answer['answer_title'])) bubbles-bg-color @endif"
+                    >
                         <img
                             src="{{ asset('images/bubbles-big.png') }}"
                             width="{{ $answer['answer_width'] }}"
