@@ -1,18 +1,10 @@
 $(document).ready(function () {
-    // TODO добавить проверку на количество раундов макс 10
     let isStep1Valid = false;
     const answers = $('#answers').data('answers');
 
     // Выключение кнопки next-step, если поля game_title и rounds_quantity не заполнены
     function validatedStep1() {
-        const gameTitleValue = $('#game_title').val().trim();
-        const roundsQuantityValue = $('#rounds_quantity').val().trim();
-
-        // Проверка, что rounds_quantity не превышает 10
-        const isValidRoundsQuantity = roundsQuantityValue === '' || (parseInt(roundsQuantityValue) <= 10);
-
-        isStep1Valid = gameTitleValue !== '' && isValidRoundsQuantity;
-
+        isStep1Valid = $('#game_title').val().trim() !== '' && $('#rounds_quantity').val().trim() !== '';
         $('#next-step').prop('disabled', !isStep1Valid);
     }
 
@@ -24,6 +16,7 @@ $(document).ready(function () {
 
     $('#next-step').click(function () {
         const roundsQuantity = $('#rounds_quantity').val();
+
         // Получаем предыдущее количество раундов
         const previousRoundsQuantity = $('#rounds-container .round').length;
 
@@ -233,6 +226,12 @@ $(document).ready(function () {
                 .attr('type', 'button')
                 .addClass('btn btn-danger btn-sm deleteBtn');
 
+            const questionsLength = roundContainer.find('input[name^="questions["]').length+1;
+            const QUESTIONS_COUNT = 10;
+            const isRoundQuestionsCountValid = questionsLength >= QUESTIONS_COUNT;
+
+            $(this).prop('disabled', isRoundQuestionsCountValid);
+
             questionInputContainer
                 .append(questionInput)
                 .append(answerInput)
@@ -243,7 +242,9 @@ $(document).ready(function () {
 
         // Удаление вопроса
         $('#rounds-container').on('click', '.deleteBtn', function () {
+            const roundContainer = $(this).closest('.round');
             const questionContainer = $(this).closest('.question');
+            roundContainer.find('.addQuestion').prop('disabled', false);
 
             questionContainer.remove();
         });

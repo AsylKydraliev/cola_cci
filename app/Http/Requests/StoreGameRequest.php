@@ -24,7 +24,7 @@ class StoreGameRequest extends FormRequest
     {
         return [
             'game_title' => ['required', 'min:3', ],
-            'rounds_quantity' => ['required', 'numeric', 'max:10'],
+            'rounds_quantity' => ['required', 'numeric'],
             'rounds' => ['required', 'array'],
             'round_descriptions' => ['required', 'array'],
             'questions' => ['required', 'array'],
