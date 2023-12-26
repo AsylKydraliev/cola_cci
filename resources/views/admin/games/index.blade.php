@@ -77,18 +77,20 @@
                                         ></i>
                                     </a>
 
-                                    <form action="{{ route('admin.games.destroy', ['game' => $game]) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn d-inline-block icons icon-link-hover">
-                                            <i
-                                                class="bi bi-trash fs-4 text-danger"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-placement="bottom"
-                                                data-bs-title="Удалить"
-                                            ></i>
-                                        </button>
-                                    </form>
+                                    <input type="hidden" name="_token">
+
+                                    <button
+                                        type="button"
+                                        class="btn d-inline-block icons icon-link-hover deleteGameConfirm"
+                                        data-game_id="{{ $game->id }}"
+                                    >
+                                        <i
+                                            class="bi bi-trash fs-4 text-danger"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom"
+                                            data-bs-title="Удалить"
+                                        ></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -104,3 +106,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @vite(['resources/js/admin/gamesDelete.js'])
+@endpush
