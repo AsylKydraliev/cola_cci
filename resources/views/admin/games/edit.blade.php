@@ -105,7 +105,7 @@
                                 Добавить вопрос
                             </button>
 
-                            @foreach($questions[$keyRound] as $keyQuestion => $question)
+                            @foreach($round->questions as $keyQuestion => $question)
                                 <div class="mb-1 d-flex gap-1 question">
                                     <input
                                         type="text"

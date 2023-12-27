@@ -121,23 +121,9 @@ class GameController extends Controller
     public function edit(Game $game): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $answers = Answer::all();
-        $questions = [];
+        $game->load('rounds.questions');
 
-        foreach ($game->rounds as $round) {
-            $questions[] = Question::query()
-                ->select(
-                    'questions.id',
-                    'questions.question_title',
-                    'questions.round_id',
-                    'questions.answer_id',
-                    'questions.points'
-                )
-                ->where('questions.round_id', '=', $round->id)
-                ->get()
-                ->toArray();
-        }
-
-        return view('admin.games.edit', compact('game', 'answers', 'questions'));
+        return view('admin.games.edit', compact('game', 'answers'));
     }
 
     /**
