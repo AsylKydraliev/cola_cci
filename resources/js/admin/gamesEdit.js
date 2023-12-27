@@ -27,11 +27,13 @@ $(document).ready(function () {
             .attr('type', 'text')
             .attr('name', `new_questions[${roundId}][${questionIndex}]`)
             .addClass('form-control form-control-sm col me-1')
-            .attr('placeholder', 'Введите вопрос');
+            .attr('placeholder', 'Введите вопрос')
+            .attr('required', true);
         const answerInput = $('<select>')
             .attr('name', `new_answer_ids[${roundId}][${questionIndex}]`)
             .addClass('form-select form-select-sm col me-1')
-            .attr('placeholder', 'Выберите ответ');
+            .attr('placeholder', 'Выберите ответ')
+            .attr('required', true);
         // Добавление пустого варианта
         answerInput.append($('<option>')
             .attr('disabled', true)
@@ -52,7 +54,7 @@ $(document).ready(function () {
             .attr('type', 'button')
             .addClass('btn btn-danger btn-sm deleteBtn');
 
-        const questionsLength = roundContainer.find('.question').length+1;
+        const questionsLength = roundContainer.find('.question').length + 1;
         const QUESTIONS_COUNT = 10;
         const isRoundQuestionsCountValid = questionsLength >= QUESTIONS_COUNT;
 
@@ -155,7 +157,7 @@ $(document).ready(function () {
                     .attr('type', 'button')
                     .addClass('btn btn-danger btn-sm deleteBtn');
 
-                const questionsLength = roundContainer.find('.question').length+1;
+                const questionsLength = roundContainer.find('.question').length + 1;
                 const QUESTIONS_COUNT = 10;
                 const isRoundQuestionsCountValid = questionsLength >= QUESTIONS_COUNT;
 
@@ -188,11 +190,13 @@ $(document).ready(function () {
                     .attr('type', 'text')
                     .attr('name', `new_questions[${roundIndex}][${additionalQuestionIndex}]`)
                     .addClass('form-control form-control-sm col me-1')
-                    .attr('placeholder', 'Введите вопрос');
+                    .attr('placeholder', 'Введите вопрос')
+                    .attr('required', true);
                 const answerInput = $('<select>')
                     .attr('name', `new_answer_ids[${roundIndex}][${additionalQuestionIndex}]`)
                     .addClass('form-select form-select-sm col me-1')
-                    .attr('placeholder', 'Выберите ответ');
+                    .attr('placeholder', 'Выберите ответ')
+                    .attr('required', true);
                 // Добавление пустого варианта
                 answerInput.append($('<option>')
                     .attr('disabled', true)
@@ -213,7 +217,7 @@ $(document).ready(function () {
                     .attr('type', 'button')
                     .addClass('btn btn-danger btn-sm deleteBtn');
 
-                const questionsLength = roundContainer.find('.question').length+1;
+                const questionsLength = roundContainer.find('.question').length + 1;
                 const QUESTIONS_COUNT = 10;
                 const isRoundQuestionsCountValid = questionsLength >= QUESTIONS_COUNT;
 

@@ -199,6 +199,39 @@ class GameController extends Controller
                 ]);
             }
 
+            if (isset($questions[$roundId])) {
+                // Обновление или создание вопроса для каждого раунда
+                foreach ($questions[$roundId] as $questionId => $questionTitle) {
+                    // Получаем массив идентификаторов вопросов из запроса
+                    $requestQuestionIds = array_keys($questions[$roundId]);
+
+                    // Получаем все вопросы, принадлежащие к текущему раунду
+                    $existingQuestions = Question::query()->where('round_id', '=', $roundId)->get();
+
+                    // Удаляем те, которых нет в запросе
+                    foreach ($existingQuestions as $existingQuestion) {
+                        if (!in_array($existingQuestion->id, $requestQuestionIds)) {
+                            $existingQuestion->delete();
+                        }
+                    }
+
+                    // Получение баллов для вопроса
+                    $point = $points[$roundId][$questionId];
+                    $answerId = $answerIds[$roundId][$questionId];
+
+                    $question = Question::find($questionId);
+
+                    if ($question) {
+                        $question->update([
+                            'question_title' => $questionTitle,
+                            'points' => $point,
+                            'answer_id' => $answerId,
+                            'round_id' => $roundId,
+                        ]);
+                    }
+                }
+            }
+
             if (isset($new_questions[$roundId])) {
                 foreach ($new_questions[$roundId] as $key => $questionTitle) {
                     // Получение баллов для вопроса
