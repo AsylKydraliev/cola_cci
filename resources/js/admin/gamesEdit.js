@@ -48,7 +48,8 @@ $(document).ready(function () {
             .attr('type', 'number')
             .attr('name', `new_points[${roundId}][${questionIndex}]`)
             .addClass('form-control form-control-sm col me-1')
-            .attr('placeholder', 'Количество баллов за ответ');
+            .attr('placeholder', 'Количество баллов за ответ')
+            .attr('required', true);
 
         const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
             .attr('type', 'button')
@@ -211,7 +212,8 @@ $(document).ready(function () {
                     .attr('type', 'number')
                     .attr('name', `new_points[${roundIndex}][${additionalQuestionIndex}]`)
                     .addClass('form-control form-control-sm col me-1')
-                    .attr('placeholder', 'Количество баллов за ответ');
+                    .attr('placeholder', 'Количество баллов за ответ')
+                    .attr('required', true);
 
                 const deleteInputButton = $('<button><i class="bi bi-x-lg"></i></button><br>')
                     .attr('type', 'button')
