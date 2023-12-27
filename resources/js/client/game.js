@@ -5,6 +5,7 @@ $(document).ready(function () {
     const playerWinnerName = $('[name="player_winner_name"]').val();
     const isPlayer = $('[name="is_player"]').val();
     const correctAnswer = $('[name="answer"]').val();
+    const correctAnswerId = $('[name="answer_id"]').val();
 
     if (!isPlayer && playerWinnerId) {
         Swal.fire({
@@ -36,12 +37,32 @@ $(document).ready(function () {
         });
     }
 
-    // const answer = $('#answer').data('answer');
-
     let isTimerRunning = false;
     $(".bubble-player").on("click", function () {
         const clickedAnswer = $(this).find('.answer_id').val();
         const csrf_token = $('#player_id input[name="_token"]').val();
+
+        if (clickedAnswer === correctAnswerId) {
+            Swal.fire({
+                title: 'Поздравляем',
+                text: 'Вы выбрали правильный вариант!',
+                icon: 'success',
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false
+            });
+
+            $.ajax({
+                type: 'POST',
+                headers: {'X-CSRF-TOKEN': csrf_token},
+                url: `/save_player_winner/${partyStageId}`,
+                data: {
+                    clickedAnswer
+                }
+            });
+
+            return;
+        }
 
         // Проверить, не выполняется ли уже таймер
         if (isTimerRunning) {
@@ -54,6 +75,7 @@ $(document).ready(function () {
                 allowOutsideClick: false,
                 timer: 3000
             });
+
             return;
         }
 

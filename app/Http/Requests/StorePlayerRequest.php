@@ -23,7 +23,7 @@ class StorePlayerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:2', 'max:255'],
+            'name' => ['required', 'max:255'],
             'game_code' => ['nullable', 'numeric', Rule::exists('parties', 'game_code')],
         ];
     }

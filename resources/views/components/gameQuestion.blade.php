@@ -46,6 +46,7 @@
     @if($player)
         <input value="{{ $existingPlayer->id }}" name="current_player_id" type="hidden">
         <input value="{{ $partyStage->id }}" name="party_stage_id" type="hidden">
+        <input value="{{ $partyStage->answer_id }}" name="answer_id" type="hidden">
     @endif
 
     @if($partyStage->player_winner && $partyStage->type == \App\Models\PartyStage::TYPE_QUESTION)

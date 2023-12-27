@@ -22,7 +22,7 @@ class UpdateGameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'game_title' => ['required', 'min:3', 'max:255'],
+            'game_title' => ['required', 'max:255'],
             'rounds_quantity' => ['required', 'numeric'],
             'rounds' => ['required', 'array'],
             'round_descriptions' => ['required', 'array'],

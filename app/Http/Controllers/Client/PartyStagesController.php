@@ -155,7 +155,10 @@ class PartyStagesController extends Controller
         $clickedAnswerId = intval($request->get('clickedAnswer'));
         $session_id = session()->getId();
 
-        $player = Player::query()->where('session_id', '=', $session_id)->firstOrFail();
+        $player = Player::query()
+            ->where('session_id', '=', $session_id)
+            ->where('party_id', '=', $partyStage->party_id)
+            ->firstOrFail();
 
         if ($partyStage->player_winner) {
             return response()->json(['success' => false, 'message' => 'Player winner already exists']);
