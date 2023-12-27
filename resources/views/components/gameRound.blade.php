@@ -17,7 +17,7 @@
 
 <div class="d-flex flex-row justify-content-between gap-5 mx-5 pending-content align-items-center">
     <div class="w-50">
-        <img src="{{ asset('images/pending-img.png') }}" alt="" width="100%">
+        <img src="{{ asset('images/game-gif.gif') }}" alt="" width="100%" class="gif">
     </div>
     <div class="w-50 position-relative">
         <div class="pending-content-label col-2">Описание</div>
