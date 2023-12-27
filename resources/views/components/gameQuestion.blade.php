@@ -6,6 +6,7 @@
         <div class="mx-5">
             <div class="position-relative">
                 <img src="{{ asset('images/title-img.png') }}" alt="" width="100%" height="170">
+
                 <div class="text-container">
                     <h1 class="pending-title">{{ $partyStage->title }}</h1>
                 </div>
@@ -15,6 +16,20 @@
     <div class="d-flex flex-wrap gap-2 mx-5 game-content mt-4">
         <div class="position-relative" style="width: 1250px">
             <img src="{{ asset('images/bubbles-bg.png') }}" alt="" width="1250px" class="bubbles-bg">
+
+            <div class="bubbles d-flex gap-4 flex-wrap align-items-start justify-content-center">
+                @foreach ($partyStage->round_answers as $answer)
+                    <button
+                        class="bubble"
+                    >
+                        <img
+                            src="{{ asset('images/bubbles-big.png') }}"
+                            width="{{ $answer['answer_width'] }}"
+                            alt="bubble"
+                        />
+                    </button>
+                @endforeach
+            </div>
         </div>
         <div class="game-leaders">
             <div class="game-leaders-list">
