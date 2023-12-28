@@ -14,8 +14,10 @@
                             </span>
                                 {{ $partyStage->title }}
                             </div>
-                            <span class="text-secondary">Описание раунда:</span>
-                            {{ $partyStage->description }}
+                            @if($partyStage->description)
+                                <span class="text-secondary">Описание раунда:</span>
+                                {{ $partyStage->description }}
+                            @endif
                             @if($partyStage->type == \App\Models\PartyStage::TYPE_QUESTION)
                                 <div><span class="text-secondary">Баллы:</span> {{ $partyStage->points }}</div>
                                 <div><span class="text-secondary">Ответ:</span> {{ $partyStage->answer->answer_title }}
@@ -24,6 +26,17 @@
                                     <div>
                                         <span class="text-secondary">Победитель:</span>
                                         {{ $partyStage->player_winner->name }}
+                                    </div>
+                                @endif
+
+                                @if ($partyStage->round_answers)
+                                    <div>
+                                        <span class="text-secondary">Список ответов:</span>
+                                        @foreach($partyStage->round_answers as $bubble)
+                                            @if ($bubble['answer_title'])
+                                                {{ $bubble['answer_title'] }},
+                                            @endif
+                                        @endforeach
                                     </div>
                                 @endif
                             @endif
